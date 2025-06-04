@@ -6,7 +6,7 @@ export function admissionsChart(elem) {
 		series: [
 			{
 				name: "Admissions",
-				data: [44, 10, 57, 56, 61, 58, 63, 60, 66],
+				data: [44, 10, 57, 56, 61, 58],
 			},
 		],
 		chart: {
@@ -30,7 +30,7 @@ export function admissionsChart(elem) {
 			colors: ["transparent"],
 		},
 		xaxis: {
-			categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"],
+			categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
 		},
 		yaxis: {
 			title: {
@@ -60,7 +60,18 @@ export function paymentsChart(elem) {
 	var options = {
 		series: [65, 20],
 		labels: ["Paid", "Due"],
-		colors: ["#2ecc71", "#ff6565"], 
+		colors: ["#2ecc71", "#ff6565"],
+		// fill: {
+		// 	type: "gradient",
+		// },
+		// shadow: {
+		// 	enabled: true,
+		// 	color: "#000",
+		// 	top: 2,
+		// 	left: 2,
+		// 	blur: 4,
+		// 	opacity: 0.1,
+		// },
 		chart: {
 			width: 450,
 			type: "donut",

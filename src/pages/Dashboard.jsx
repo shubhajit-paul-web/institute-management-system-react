@@ -20,7 +20,7 @@ const Dashboard = () => {
 		<PageWrapper pageName="Dashboard">
 			<DashboardHeader />
 			<OverviewCards>
-				<div className="mt-15 flex gap-20">
+				<div className="mt-15 flex justify-between gap-20">
 					<AdmissionsOverviewChart elem={admissionsChartContainer} />
 					<PaymentsOverviewChart elem={paymentsChartContainer} />
 				</div>
