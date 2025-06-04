@@ -10,7 +10,7 @@ const Navbar = () => {
 	};
 
 	return (
-		<div className="relative w-fit h-[calc(100vh-2.5rem)] overflow-hidden rounded-xl">
+		<div className="sticky top-5 w-fit h-[calc(100vh-2.5rem)] overflow-hidden rounded-xl">
 			{/* Navbar Scrollable Content */}
 			<nav className="w-full h-full flex flex-col gap-5 bg-white text-[#4A4A4A] p-5 overflow-y-auto overflow-x-hidden shadow-lg" style={{scrollbarWidth: "none"}}>
 				<NavLink to="/" className={handleActiveLink}>
