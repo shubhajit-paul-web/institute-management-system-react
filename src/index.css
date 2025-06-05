@@ -1,5 +1,7 @@
 @import "tailwindcss";
+@import "@radix-ui/themes/styles.css";
 
 button {
   cursor: pointer;
+  transition: 0.3s ease;
 }
