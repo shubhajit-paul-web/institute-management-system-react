@@ -12,8 +12,13 @@ const Dashboard = () => {
 	const paymentsChartContainer = useRef(null);
 
 	useEffect(() => {
-		admissionsChart(admissionsChartContainer);
-		paymentsChart(paymentsChartContainer);
+		const chart1 = admissionsChart(admissionsChartContainer);
+		const chart2 = paymentsChart(paymentsChartContainer);
+
+		return () => {
+			chart1?.destroy();
+			chart2?.destroy();
+		};
 	}, []);
 
 	return (

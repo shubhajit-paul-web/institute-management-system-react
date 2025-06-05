@@ -9,6 +9,7 @@ import Teachers from "../pages/Teachers";
 import Expenses from "../pages/Expenses";
 import Salaries from "../pages/Salaries";
 import PageNotFound from "../pages/PageNotFound";
+import Settings from "../pages/Settings";
 
 const AppRoutes = () => {
 	return (
@@ -22,6 +23,7 @@ const AppRoutes = () => {
 				<Route path="/teachers" element={<Teachers />} />
 				<Route path="/expenses" element={<Expenses />} />
 				<Route path="/salaries" element={<Salaries />} />
+				<Route path="/settings" element={<Settings />} />
 				<Route path="*" element={<PageNotFound />} />
 			</Route>
 		</Routes>

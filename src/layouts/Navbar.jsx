@@ -1,4 +1,4 @@
-import {ChartLine, CreditCard, GraduationCap, Landmark, Presentation, User, UserRound, Wallet} from "lucide-react";
+import {ChartLine, CreditCard, GraduationCap, Landmark, Presentation, Settings, User, UserRound, Wallet} from "lucide-react";
 import {NavLink} from "react-router-dom";
 
 const Navbar = () => {
@@ -36,6 +36,9 @@ const Navbar = () => {
 				</NavLink>
 				<NavLink to="/salaries" className={handleActiveLink}>
 					<Landmark /> Salaries
+				</NavLink>
+				<NavLink to="/settings" className={handleActiveLink}>
+					<Settings /> Settings
 				</NavLink>
 			</nav>
 
