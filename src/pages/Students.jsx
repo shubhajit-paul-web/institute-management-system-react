@@ -1,5 +1,5 @@
 import PageWrapper from "../components/PageWrapper";
-import StudentCard from "../components/Students/StudentCard";
+import StudentCard from "../components/Students/StudentsTable";
 import StudentsHeader from "../components/Students/StudentsHeader";
 
 const Students = () => {

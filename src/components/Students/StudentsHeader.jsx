@@ -1,24 +1,17 @@
 import {UserRoundPlus} from "lucide-react";
-import ButtonOne from "../ButtonOne";
-import SearchBox from "../SearchBox";
+import PageHeader from "../PageHeader";
 
 const StudentsHeader = () => {
 	return (
-		<div className="bg-zinc-50 rounded-lg flex justify-between p-5">
-			<form className="w-2/5">
-				<SearchBox placeholder="Search students..." />
-			</form>
-			<div className="flex gap-6">
-				<select className="px-6 rounded-lg bg-zinc-100">
-					<option value="" selected disabled>
-						Export
-					</option>
-					<option value="">PDF</option>
-					<option value="">XLS</option>
-				</select>
-				<ButtonOne icon={<UserRoundPlus size="1.05rem" />} text="Admission" />
-			</div>
-		</div>
+		<PageHeader placeholder="Search students..." btnIcon={<UserRoundPlus size="1.05rem" />} btnText="Admission">
+			<select className="px-7 py-[0.9rem] rounded-lg bg-zinc-100 border border-zinc-300">
+				<option value="" defaultValue>
+					Export
+				</option>
+				<option value="PDF">PDF</option>
+				<option value="XLS">XLS</option>
+			</select>
+		</PageHeader>
 	);
 };
 

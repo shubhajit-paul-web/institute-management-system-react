@@ -1,6 +1,6 @@
 import TableHeader from "./TableHeader";
 
-const StudentCard = () => {
+const StudentTable = () => {
 	// temp data (dummy)
 	const students = [
 		{
@@ -40,12 +40,14 @@ const StudentCard = () => {
 	return (
 		<div className="overflow-x-auto rounded-lg">
 			<table className="min-w-full table-auto">
-				<TableHeader />
+				{/* table header */}
+				<TableHeader fields={["ID", "Student", "Course", "Batch", "Email", "Mobile", "Admission Date", "Action"]} />
+				{/* table body */}
 				<tbody className="bg-white">
 					{students?.length === 0 ||
 						students?.map((student) => {
 							return (
-								<tr className="hover:bg-gray-100">
+								<tr className="hover:bg-gray-100" key={student?.ID}>
 									<td className={tableRowStyles}>{student?.ID}</td>
 									<td className={`${tableRowStyles} flex items-center gap-3`}>
 										<img src={student?.avatar} alt="avatar" className="w-9 aspect-square object-cover object-center rounded-full" />
@@ -68,4 +70,4 @@ const StudentCard = () => {
 	);
 };
 
-export default StudentCard;
+export default StudentTable;
