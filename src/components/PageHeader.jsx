@@ -1,5 +1,6 @@
 import SearchBox from "./SearchBox";
 import ButtonOne from "./ButtonOne";
+import AddStudentModel from "./Students/AddStudentModel"
 
 const PageHeader = ({placeholder, btnIcon, btnText, children}) => {
 	return (
@@ -9,7 +10,7 @@ const PageHeader = ({placeholder, btnIcon, btnText, children}) => {
 			</form>
 			<div className="flex items-center gap-4">
 				{children}
-				<ButtonOne icon={btnIcon} text={btnText} />
+				<ButtonOne icon={btnIcon} text={btnText} modelView={<AddStudentModel />} />
 			</div>
 		</div>
 	);
