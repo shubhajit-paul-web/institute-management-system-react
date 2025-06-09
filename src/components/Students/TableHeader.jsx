@@ -1,6 +1,6 @@
 const TableHeader = ({fields}) => {
 	return (
-		<thead className="bg-[#475472] text-gray-50">
+		<thead className="dark:bg-[#1F2A38] dark:text-gray-50">
 			<tr className="text-left text-[1.08rem]">
 				{fields.map((item, index) => {
 					return (

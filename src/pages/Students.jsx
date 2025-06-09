@@ -2,14 +2,15 @@ import PageWrapper from "../components/PageWrapper";
 import StudentTable from "../components/Students/StudentsTable";
 import StudentsHeader from "../components/Students/StudentsHeader";
 import AddStudentModel from "../components/Students/AddStudentModel";
+import SectionWrapper from "../components/SectionWrapper";
 
 const Students = () => {
 	return (
 		<PageWrapper pageName="Students">
 			<StudentsHeader />
-			<div className="bg-zinc-50 mt-5 rounded-lg p-5">
+			<SectionWrapper>
 				<StudentTable />
-			</div>
+			</SectionWrapper>
 			<AddStudentModel />
 		</PageWrapper>
 	);

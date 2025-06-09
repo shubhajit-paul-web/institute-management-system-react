@@ -4,7 +4,7 @@ import PageHeader from "../PageHeader";
 const StudentsHeader = () => {
 	return (
 		<PageHeader placeholder="Search students..." btnIcon={<UserRoundPlus size="1.05rem" />} btnText="Admission">
-			<select className="px-7 py-[0.9rem] rounded-lg bg-zinc-100 border border-zinc-300">
+			<select className="px-7 py-[0.9rem] rounded-lg dark:bg-bg-dark border dark:border-dark-one dark:text-text-main-dark">
 				<option value="" defaultValue>
 					Export
 				</option>

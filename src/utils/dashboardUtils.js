@@ -18,6 +18,8 @@ export function admissionsChart(elem) {
 		chart: {
 			type: "bar",
 			height: 360,
+			background: "transparent", // transparent to match dark background
+			foreColor: "#E6EDF3", // text color for axis & labels
 		},
 		plotOptions: {
 			bar: {
@@ -37,21 +39,33 @@ export function admissionsChart(elem) {
 		},
 		xaxis: {
 			categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+			labels: {
+				style: {colors: "#8B949E"},
+			},
 		},
 		yaxis: {
 			title: {
 				text: "Admissions",
+				style: {color: "#E6EDF3"},
+			},
+			labels: {
+				style: {colors: "#8B949E"},
 			},
 		},
 		fill: {
 			opacity: 1,
+			colors: ["#58A6FF"],
 		},
 		tooltip: {
+			theme: "dark",
 			y: {
 				formatter: function (val) {
 					return val + " students";
 				},
 			},
+		},
+		grid: {
+			borderColor: "#30363D", // subtle grid lines
 		},
 	};
 
@@ -74,24 +88,26 @@ export function paymentsChart(elem) {
 	var options = {
 		series: [65, 20],
 		labels: ["Paid", "Due"],
-		colors: ["#2ecc71", "#ff6565"],
-		// fill: {
-		// 	type: "gradient",
-		// },
-		// shadow: {
-		// 	enabled: true,
-		// 	color: "#000",
-		// 	top: 2,
-		// 	left: 2,
-		// 	blur: 4,
-		// 	opacity: 0.1,
-		// },
+		colors: ["#3FB950", "#F85149"], // success green & error red
 		chart: {
 			width: 450,
 			type: "donut",
+			background: "transparent",
+			foreColor: "#E6EDF3",
 		},
 		dataLabels: {
 			enabled: false,
+		},
+		legend: {
+			position: "right",
+			offsetY: 0,
+			height: 230,
+			labels: {
+				colors: ["#E6EDF3"],
+			},
+		},
+		tooltip: {
+			theme: "dark",
 		},
 		responsive: [
 			{
@@ -106,11 +122,6 @@ export function paymentsChart(elem) {
 				},
 			},
 		],
-		legend: {
-			position: "right",
-			offsetY: 0,
-			height: 230,
-		},
 	};
 
 	if (elem.current) {

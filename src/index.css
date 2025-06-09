@@ -1,7 +1,21 @@
 @import "tailwindcss";
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 @import "@radix-ui/themes/styles.css";
+
+/* dark theme */
+@theme {
+  --color-bg-dark: #0D1117;
+  --color-bg-surface-dark: #161B22;
+  --color-bg-primary-dark: #58A6FF;
+  --color-text-main-dark: #E6EDF3;
+  --color-text-muted-dark: #8B949E;
+  --color-accent-dark-one: #1F6FEB;
+  --color-dark-one: #30363D;
+  --color-bg-card-dark: #161B22;
+  --color-text-medium-dark: #8B949E;
+}
 
 button {
   cursor: pointer;
-  transition: 0.3s ease;
+  transition: 0.3s ease; 
 }

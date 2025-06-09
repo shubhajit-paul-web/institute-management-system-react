@@ -3,16 +3,16 @@ import {NavLink} from "react-router-dom";
 
 const Navbar = () => {
 	const handleActiveLink = (e) => {
-		const baseStyle = "flex flex-col items-center gap-2 py-5 px-3 rounded-md text-[#4A4A4A]";
-		const activeStyle = "bg-[#E6F4FF] text-blue-500 hover:bg-sky-100";
+		const baseStyle = "flex flex-col items-center gap-2 py-5 px-3 rounded-lg ";
+		const activeStyle = "dark:bg-[#1F2A38] dark:text-[#58A6FF] hover:dark:bg-[#1E2A38]";
 
-		return e.isActive ? `${baseStyle} ${activeStyle}` : `${baseStyle} bg-[#F8F8F8] hover:bg-[#E4E4E4] transition duration-100`;
+		return e.isActive ? `${baseStyle} ${activeStyle}` : `${baseStyle} dark:bg-bg-surface-dark hover:dark:bg-[#1A2230] transition duration-100`;
 	};
 
 	return (
-		<div className="sticky top-5 w-fit h-[calc(100vh-2.5rem)] overflow-hidden rounded-xl">
+		<div className="sticky top-5 w-fit h-[calc(100vh-2.5rem)] overflow-hidden rounded-2xl">
 			{/* Navbar Scrollable Content */}
-			<nav className="w-full h-full flex flex-col gap-5 bg-white text-[#4A4A4A] p-5 overflow-y-auto overflow-x-hidden shadow-lg" style={{scrollbarWidth: "none"}}>
+			<nav className="w-full h-full flex flex-col gap-5 dark:bg-bg-dark dark:text-text-main-dark p-5 overflow-y-auto overflow-x-hidden shadow-lg" style={{scrollbarWidth: "none"}}>
 				<NavLink to="/" className={handleActiveLink}>
 					<ChartLine /> Dashboard
 				</NavLink>

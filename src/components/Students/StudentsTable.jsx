@@ -35,7 +35,7 @@ const StudentTable = () => {
 		},
 	];
 
-	const tableRowStyles = "px-4 py-4 border-b border-zinc-200"; // styles for table data
+	const tableRowStyles = "px-4 py-4 border-b dark:text-[#E6EDF3] dark:border-[#30363D]"; // styles for table data
 
 	return (
 		<div className="overflow-x-auto rounded-lg">
@@ -43,11 +43,11 @@ const StudentTable = () => {
 				{/* table header */}
 				<TableHeader fields={["ID", "Student", "Course", "Batch", "Email", "Mobile", "Admission Date", "Action"]} />
 				{/* table body */}
-				<tbody className="bg-white">
+				<tbody>
 					{students?.length === 0 ||
 						students?.map((student) => {
 							return (
-								<tr className="hover:bg-gray-100" key={student?.ID}>
+								<tr className="dark:even:bg-[#0D1117] dark:odd:bg-transparent dark:hover:bg-[#1A2230] transition" key={student?.ID}>
 									<td className={tableRowStyles}>{student?.ID}</td>
 									<td className={`${tableRowStyles} flex items-center gap-3`}>
 										<img src={student?.avatar} alt="avatar" className="w-9 aspect-square object-cover object-center rounded-full" />
@@ -58,7 +58,7 @@ const StudentTable = () => {
 									<td className={tableRowStyles}>{student?.email}</td>
 									<td className={tableRowStyles}>{student?.mobile}</td>
 									<td className={tableRowStyles}>{student?.admissionDate}</td>
-									<td className={tableRowStyles}>View</td>
+									<td className={`${tableRowStyles} opacity-60 dark:hover:text-sky-500 cursor-pointer`}>View</td>
 								</tr>
 							);
 						})}
