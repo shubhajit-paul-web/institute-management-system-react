@@ -1,3 +1,4 @@
+import AddCoursesModel from "../components/Courses/AddCoursesModel";
 import CourseCard from "../components/Courses/CourseCard";
 import CoursesHeader from "../components/Courses/CoursesHeader";
 import PageWrapper from "../components/PageWrapper";
@@ -16,6 +17,7 @@ const Courses = () => {
 					})}
 				</div>
 			</SectionWrapper>
+			<AddCoursesModel />
 		</PageWrapper>
 	);
 };
