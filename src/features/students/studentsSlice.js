@@ -9,13 +9,13 @@ export const studentsSlice = createSlice({
 	initialState,
 	reducers: {
 		addStudent: (state, action) => {
-			state.push({
+			state.students?.push({
 				id: nanoid(),
 				data: action.payload,
 			});
 		},
 		removeStudent: (state, action) => {
-			state = state.filter((student) => student.id !== action.payload);
+			state = state.students?.filter((student) => student.id !== action.payload);
 		},
 	},
 });

@@ -43,7 +43,7 @@ const Navbar = () => {
 			</nav>
 
 			{/* Shadow Overlay */}
-			<div className="pointer-events-none absolute left-0 bottom-0 w-full h-20 bg-gradient-to-t from-black/10 to-transparent z-10 rounded-b-xl" />
+			<div className="pointer-events-none absolute left-0 bottom-0 w-full h-20 bg-gradient-to-t dark:from-black/50 light:from-black/10 to-transparent z-10 rounded-b-xl" />
 		</div>
 	);
 };
