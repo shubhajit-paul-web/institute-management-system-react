@@ -1,8 +1,8 @@
-import React from 'react'
+import PageWrapper from "../components/PageWrapper"
 
 const Salaries = () => {
   return (
-	<div>Salaries</div>
+    <PageWrapper pageName="Salaries"></PageWrapper>
   )
 }
 

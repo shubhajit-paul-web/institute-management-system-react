@@ -1,6 +1,8 @@
+import PageWrapper from "../components/PageWrapper"
+
 const Teachers = () => {
   return (
-	<div>Teachers</div>
+	  <PageWrapper pageName="Teachers">Teachers</PageWrapper>
   )
 }
 

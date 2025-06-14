@@ -1,6 +1,8 @@
+import PageWrapper from "../components/PageWrapper"
+
 const Settings = () => {
   return (
-	<div>Settings</div>
+	  <PageWrapper pageName="Settings"></PageWrapper>
   )
 }
 

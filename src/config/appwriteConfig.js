@@ -6,6 +6,7 @@ const appwriteConfig = {
 	database: {
 		id: String(import.meta.env.VITE_APPWRITE_DATABASE_ID),
 		collections: {
+			instituteAccount: String(import.meta.env.VITE_APPWRITE_INSTITUTE_ACCOUNT_COLLECTION_ID),
 			students: String(import.meta.env.VITE_APPWRITE_STUDENTS_COLLECTION_ID),
 			courses: String(import.meta.env.VITE_APPWRITE_COURSES_COLLECTION_ID),
 		},
