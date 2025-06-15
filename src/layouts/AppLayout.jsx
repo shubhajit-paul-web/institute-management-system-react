@@ -1,13 +1,17 @@
 import {Outlet} from "react-router-dom";
 import Navbar from "./Navbar";
 import {useEffect, useState} from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import authService from "../appwrite/auth";
 import {login, logout} from "../features/auth/authSlice";
 
 const AppLayout = () => {
 	// const [loading, setLoading] = useState(true);
 	const dispatch = useDispatch();
+	const instituteInfo = useSelector((data) => data.authReducer);
+
+	console.log(instituteInfo);
+	
 
 	useEffect(() => {
 		// authService.createAccount({

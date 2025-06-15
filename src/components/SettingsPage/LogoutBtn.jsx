@@ -1,7 +1,7 @@
-const LogoutBtn = () => {
-  return (
-	<button className="font-medium text-white dark:bg-red-500/70 py-1.5 px-3.5 rounded-lg">Logout</button>
-  )
-}
+import { LogOut } from "lucide-react";
 
-export default LogoutBtn
+const LogoutBtn = () => {
+	return <button className="bg-red-500 hover:bg-red-500/75 text-white py-2 px-4 rounded-md shadow inline-flex items-center gap-2 mt-10"><LogOut size="1.2rem" /> Logout</button>;
+};
+
+export default LogoutBtn;

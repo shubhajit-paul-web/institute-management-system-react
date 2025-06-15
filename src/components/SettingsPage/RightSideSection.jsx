@@ -1,7 +1,7 @@
-import LogoutBtn from "./LogoutBtn";
 import ProfileField from "./ProfileField";
 import ProfileFieldCol from "./ProfileFieldCol";
 import ProfileFieldWrapper from "./ProfileFieldWrapper";
+import {formatISOToReadableDateTime} from "../../utils/DateTimeUtils.js";
 
 const RightSideSection = () => {
 	return (
@@ -31,6 +31,16 @@ const RightSideSection = () => {
 					<ProfileField lable="Phone Number" value="+91 1234567890" />
 					<ProfileField lable="Official Website" value="sheryians.com" />
 				</ProfileFieldCol>
+			</ProfileFieldWrapper>
+			{/* Section 3: Additional account info */}
+			<ProfileFieldWrapper>
+				<div>
+					<p className="text-lg text-white/95 mb-4">Additional Account Info</p>
+
+					<p className="text-base dark:text-white/70">Created at: {formatISOToReadableDateTime("2025-06-14T05:11:06.132+00:00")}</p>
+					<p className="text-base dark:text-white/70">Updated at: {formatISOToReadableDateTime("2025-06-15T07:21:24.560+00:00")}</p>
+					<p className="text-base dark:text-white/70">Accessed at: {formatISOToReadableDateTime("2025-06-15T07:21:24.558+00:00")}</p>
+				</div>
 			</ProfileFieldWrapper>
 		</div>
 	);
