@@ -3,15 +3,15 @@ import Navbar from "./Navbar";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import authService from "../appwrite/auth";
-import {login, logout} from "../features/auth/authSlice";
+import {login} from "../features/auth/authSlice";
+import MainSkeleton from "../components/Skeletons/MainSkeleton";
 
 const AppLayout = () => {
-	// const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(true);
 	const dispatch = useDispatch();
 	const instituteInfo = useSelector((data) => data.authReducer);
 
 	console.log(instituteInfo);
-	
 
 	useEffect(() => {
 		// authService.createAccount({
@@ -37,8 +37,11 @@ const AppLayout = () => {
 		authService
 			.getCurrentAccount()
 			.then((accountData) => dispatch(login(accountData)))
-			.catch((error) => console.error(error));
+			.catch((error) => console.error(error))
+			.finally(() => setLoading(false));
 	}, []);
+
+	if (loading) return <MainSkeleton />;
 
 	return (
 		<div className="w-full min-h-screen flex gap-5 p-5 dark:bg-bg-surface-dark">

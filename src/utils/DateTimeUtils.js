@@ -1,3 +1,4 @@
+// Format ISO to readable date & time
 export function formatISOToReadableDateTime(isoString) {
 	const date = new Date(isoString);
 

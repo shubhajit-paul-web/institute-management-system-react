@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 @import "@radix-ui/themes/styles.css";
+@import "react-loading-skeleton/dist/skeleton.css";
 
 /* dark theme */
 @theme {
