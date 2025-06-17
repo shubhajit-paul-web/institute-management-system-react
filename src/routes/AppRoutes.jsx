@@ -10,22 +10,27 @@ import Expenses from "../pages/Expenses";
 import Salaries from "../pages/Salaries";
 import PageNotFound from "../pages/PageNotFound";
 import Settings from "../pages/Settings";
+import Login from "../pages/Login";
+import ProtectedRoute from "./ProtectedRoute";
 
 const AppRoutes = () => {
 	return (
 		<Routes>
-			<Route path="/" element={<AppLayout />}>
-				<Route index element={<Dashboard />} />
-				<Route path="/students" element={<Students />} />
-				<Route path="/courses" element={<Courses />} />
-				<Route path="/classes" element={<Classes />} />
-				<Route path="/payments" element={<Payments />} />
-				<Route path="/teachers" element={<Teachers />} />
-				<Route path="/expenses" element={<Expenses />} />
-				<Route path="/salaries" element={<Salaries />} />
-				<Route path="/settings" element={<Settings />} />
-				<Route path="*" element={<PageNotFound />} />
+			<Route element={<ProtectedRoute />}>
+				<Route path="/" element={<AppLayout />}>
+					<Route index element={<Dashboard />} />
+					<Route path="/students" element={<Students />} />
+					<Route path="/courses" element={<Courses />} />
+					<Route path="/classes" element={<Classes />} />
+					<Route path="/payments" element={<Payments />} />
+					<Route path="/teachers" element={<Teachers />} />
+					<Route path="/expenses" element={<Expenses />} />
+					<Route path="/salaries" element={<Salaries />} />
+					<Route path="/settings" element={<Settings />} />
+					<Route path="*" element={<PageNotFound />} />
+				</Route>
 			</Route>
+			<Route path="/login" element={<Login />} />
 		</Routes>
 	);
 };

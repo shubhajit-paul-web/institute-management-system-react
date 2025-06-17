@@ -1,47 +1,11 @@
 import {Outlet} from "react-router-dom";
 import Navbar from "./Navbar";
-import {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import authService from "../appwrite/auth";
-import {login} from "../features/auth/authSlice";
 import MainSkeleton from "../components/Skeletons/MainSkeleton";
 
 const AppLayout = () => {
-	const [loading, setLoading] = useState(true);
-	const dispatch = useDispatch();
-	const instituteInfo = useSelector((data) => data.authReducer);
+	// const [loading, setLoading] = useState(true);
 
-	console.log(instituteInfo);
-
-	useEffect(() => {
-		// authService.createAccount({
-		// 	EmailAddress: "info@sheryians.com",
-		// 	Password: "abcd123456",
-		// 	InstituteName: "Sheryians Coding School",
-		// 	RegistrationNumber: "SCS-2020-IND-0456",
-		// 	Type: "Private",
-		// 	EstablishedYear: 2015,
-		// 	Logo: "https://sheryians.com/logo.png",
-		// 	About: "Sheryians Coding School is an industry-leading coding bootcamp and training institute empowering students with real-world skills in web development and tech.",
-		// 	Address: "2nd Floor, STPI Building, Ring Road No.1",
-		// 	City: "Raipur",
-		// 	State: "Chhattisgarh",
-		// 	Pincode: 492001,
-		// 	Country: "India",
-		// 	PhoneNumber: 9109109155,
-		// 	OfficialWebsite: "https://sheryians.com",
-		// });
-
-		// authService.login({EmailAddress: "infovvv@sheryisgsgasfs.com", Password:"waab13##**"})
-		// authService.logout();
-		authService
-			.getCurrentAccount()
-			.then((accountData) => dispatch(login(accountData)))
-			.catch((error) => console.error(error))
-			.finally(() => setLoading(false));
-	}, []);
-
-	if (loading) return <MainSkeleton />;
+	// if (loading) return <MainSkeleton />;
 
 	return (
 		<div className="w-full min-h-screen flex gap-5 p-5 dark:bg-bg-surface-dark">

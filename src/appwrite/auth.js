@@ -29,8 +29,10 @@ export class AuthService {
 		const {EmailAddress, Password, InstituteName, RegistrationNumber, Type, EstablishedYear, Logo, About, Address, City, State, Pincode, Country, PhoneNumber, OfficialWebsite} = data;
 
 		try {
+			const userID = ID.unique();
+
             // Create user account
-			const userAccount = await this.account.create(ID.unique(), EmailAddress, Password, InstituteName);
+			const userAccount = await this.account.create(userID, EmailAddress, Password, InstituteName);
 
             // Auto-login user
             if (userAccount) {
@@ -39,7 +41,7 @@ export class AuthService {
 
             // Store additional institute data in database
             console.log("➡️ Creating document...");
-			await this.databases.createDocument(appwriteConfig.database.id, appwriteConfig.database.collections.instituteAccount, ID.unique(), {
+			await this.databases.createDocument(appwriteConfig.database.id, appwriteConfig.database.collections.instituteAccount, userID, {
 				userId: userAccount?.$id,
 				InstituteName,
 				RegistrationNumber,
@@ -82,6 +84,15 @@ export class AuthService {
 			console.error("❌ Not logged in.", error.message);
 		}
 	}
+
+	// Get all account details (document)
+	// async getAllAccountDetails() {
+	// 	try {
+	// 		const accountDetails = await this.databases.getDocument(appwriteConfig.database.id, appwriteConfig.database.collections.instituteAccount)
+	// 	} catch (error) {
+	// 		console.error(error);
+	// 	}
+	// }
 
 	// Logout
 	async logout() {
