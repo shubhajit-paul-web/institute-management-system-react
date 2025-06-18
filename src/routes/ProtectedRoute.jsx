@@ -15,7 +15,7 @@ const ProtectedRoute = () => {
 		if (!isAuthenticated) {
 			await checkAuthStatus(dispatch);
 			setLoading(false);
-		}
+		} else setLoading(false);
 	}
 
 	useEffect(() => {
@@ -25,8 +25,6 @@ const ProtectedRoute = () => {
 	if (loading) {
 		return <MainSkeleton />;
 	}
-
-	console.log(isAuthenticated);
 
 	return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
 };

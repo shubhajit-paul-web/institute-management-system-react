@@ -1,7 +1,7 @@
 import PageWrapper from "../components/PageWrapper"
 import SearchBox from "../components/SearchBox"
 import ButtonOne from "../components/ButtonOne"
-import ClasessHeader from "../components/ClassesPage/ClassesHeader"
+import ClasessHeader from "../components/Classes/ClassesHeader"
 import SectionWrapper from "../components/SectionWrapper"
 
 const Classes = () => {

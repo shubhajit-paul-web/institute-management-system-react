@@ -2,13 +2,17 @@ import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import checkAuthStatus from "../appwrite/utils/checkAuth";
-import AlreadyLoggedIn from "../components/Login/AlreadyLoggedIn";
+import AlreadyLoggedIn from "../components/Auth/Login/AlreadyLoggedIn";
 import authService from "../appwrite/auth";
+import LoginForm from "../components/Auth/Login/LoginForm";
+import loginIllustration from "../assets/images/login-graphic-lady.svg"
 
 const Login = () => {
 	const dispatch = useDispatch();
 	const [loading, setLoading] = useState(true);
 	const isAuthenticated = useSelector((state) => state.authReducer.status);
+	
+	// authService.login({EmailAddress: "info@sheryians.com", Password: "123456789"})
 
 	// authService.login({EmailAddress: "info@sheryians.com", Password: "123456789"})
 	// authService.createAccount({
@@ -40,17 +44,13 @@ const Login = () => {
 		verify();
 	}, [dispatch]);
 
-	if (loading) {
-		return false;
-	}
-
-	if (isAuthenticated) {
-		return <AlreadyLoggedIn />;
-	}
+	if (loading) return;
+	if (isAuthenticated) return <AlreadyLoggedIn />;
 
 	return (
-		<div>
-			<h1 className="text-2xl font-semibold text-white">Login Page</h1>
+		<div className="h-screen flex justify-around items-center gap-10 bg-bg-dark">
+			<img className="w-3/10" src={loginIllustration} alt="login illustration" />
+			<LoginForm />
 		</div>
 	);
 };

@@ -1,7 +1,7 @@
 import PageWrapper from "../components/PageWrapper";
 import SectionWrapper from "../components/SectionWrapper";
-import LeftSideSection from "../components/SettingsPage/LeftSideSection";
-import RightSideSection from "../components/SettingsPage/RightSideSection";
+import LeftSideSection from "../components/Settings/LeftSideSection";
+import RightSideSection from "../components/Settings/RightSideSection";
 
 const Settings = () => {
 	return (

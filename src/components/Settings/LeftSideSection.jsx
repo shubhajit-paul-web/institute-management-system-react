@@ -13,7 +13,7 @@ const LeftSideSection = () => {
 				<div className="w-full">
 						<ProfileField lable="Email Address" value="sheryians@gmail.com" extraStyles="w-full mb-5" />
 						<ProfileField lable="Password" value="***********" extraStyles="w-full" />
-						<LogoutBtn />
+						<LogoutBtn extraStyles="mt-10" />
 						<div className="absolute top-0 right-0">
 							<ThemeToggle />
 						</div>

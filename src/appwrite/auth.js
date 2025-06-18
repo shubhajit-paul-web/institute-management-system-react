@@ -1,5 +1,6 @@
 import {Client, Account, ID, Databases, Storage} from "appwrite";
 import appwriteConfig from "../config/appwriteConfig";
+import {logout} from "../features/auth/authSlice";
 
 export class AuthService {
 	client = new Client();
@@ -31,16 +32,16 @@ export class AuthService {
 		try {
 			const userID = ID.unique();
 
-            // Create user account
+			// Create user account
 			const userAccount = await this.account.create(userID, EmailAddress, Password, InstituteName);
 
-            // Auto-login user
-            if (userAccount) {
+			// Auto-login user
+			if (userAccount) {
 				await this.login({EmailAddress, Password});
 			}
 
-            // Store additional institute data in database
-            console.log("➡️ Creating document...");
+			// Store additional institute data in database
+			console.log("➡️ Creating document...");
 			await this.databases.createDocument(appwriteConfig.database.id, appwriteConfig.database.collections.instituteAccount, userID, {
 				userId: userAccount?.$id,
 				InstituteName,
@@ -58,7 +59,7 @@ export class AuthService {
 				EmailAddress,
 				OfficialWebsite,
 			});
-            console.log("✅ Document created!");
+			console.log("✅ Document created!");
 
 			return userAccount;
 		} catch (error) {
@@ -95,11 +96,13 @@ export class AuthService {
 	// }
 
 	// Logout
-	async logout() {
+	async logout(dispatch) {
 		try {
 			await this.account.deleteSessions();
+			dispatch(logout());
+			return true;
 		} catch (error) {
-			throw new Error(error);
+			throw new Error(error.message || "Logout failed");
 		}
 	}
 }
