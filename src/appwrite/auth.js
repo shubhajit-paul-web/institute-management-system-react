@@ -1,6 +1,6 @@
-import {Client, Account, ID, Databases, Storage} from "appwrite";
+import {Client, Account, ID, Databases, Storage, Query} from "appwrite";
 import appwriteConfig from "../config/appwriteConfig";
-import {logout} from "../features/auth/authSlice";
+import {login, logout} from "../features/auth/authSlice";
 
 export class AuthService {
 	client = new Client();
@@ -16,9 +16,10 @@ export class AuthService {
 	}
 
 	// Upload file (logo)
-	async uploadLogo(file) {
+	async uploadFile(file) {
 		try {
-			return await this.bucket.createFile(appwriteConfig.storage.bucketId, ID.unique(), file);
+			const uploadedFile = await this.bucket.createFile(appwriteConfig.storage.bucketId, ID.unique(), file);
+			return uploadedFile?.$id;
 		} catch (error) {
 			console.error(`Appwrite :: uploadFile error: ${error}`);
 			return false;
@@ -42,13 +43,13 @@ export class AuthService {
 
 			// Store additional institute data in database
 			console.log("➡️ Creating document...");
-			await this.databases.createDocument(appwriteConfig.database.id, appwriteConfig.database.collections.instituteAccount, userID, {
-				userId: userAccount?.$id,
+			const updatedDocument = await this.databases.createDocument(appwriteConfig.database.id, appwriteConfig.database.collections.instituteAccount, userID, {
+				// userId: userAccount?.$id,
 				InstituteName,
 				RegistrationNumber,
 				Type,
 				EstablishedYear,
-				Logo: await this.uploadLogo(Logo),
+				Logo: await this.uploadFile(Logo),
 				About,
 				Address,
 				City,
@@ -61,10 +62,10 @@ export class AuthService {
 			});
 			console.log("✅ Document created!");
 
-			return userAccount;
+			return updatedDocument;
 		} catch (error) {
 			console.error("❌ Error creating account:", error);
-			throw error;
+			return error.message;
 		}
 	}
 
@@ -86,14 +87,33 @@ export class AuthService {
 		}
 	}
 
-	// Get all account details (document)
-	// async getAllAccountDetails() {
-	// 	try {
-	// 		const accountDetails = await this.databases.getDocument(appwriteConfig.database.id, appwriteConfig.database.collections.instituteAccount)
-	// 	} catch (error) {
-	// 		console.error(error);
-	// 	}
-	// }
+	// Generate the file view URL
+	generateFileURL(fileId) {
+		return this.bucket.getFileView(appwriteConfig.storage.bucketId, fileId);
+	}
+
+	// Fetch the document from the instituteInfo collection
+	async fetchInstituteInfo(userId, dispatch) {
+		try {
+			const response = await this.databases.listDocuments(appwriteConfig.database.id, appwriteConfig.database.collections.instituteAccount, [
+				// Filters
+				Query.equal("$id", [userId]), // Ensure that userId matches the logged-in user
+			]);
+
+			if (response.documents.length > 0) {
+				// Document found for the user
+				const instituteInfo = response.documents[0];
+				dispatch(
+					login({
+						...instituteInfo,
+						Logo: this.generateFileURL(instituteInfo.Logo),
+					})
+				);
+			}
+		} catch (error) {
+			console.error("Error fetching institute info:", error);
+		}
+	}
 
 	// Logout
 	async logout(dispatch) {

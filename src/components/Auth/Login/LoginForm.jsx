@@ -30,7 +30,6 @@ const LoginForm = () => {
 			setIsSubmitting(true);
 			await authService.login(data);
 			const accountData = await authService.getCurrentAccount();
-			console.log(accountData);
 
 			if (accountData) dispatch(authLogin(accountData));
 

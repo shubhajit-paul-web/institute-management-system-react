@@ -1,12 +1,13 @@
 import authService from "../auth";
-import { login, logout } from "../../features/auth/authSlice";
+import {logout} from "../../features/auth/authSlice";
 
 const checkAuthStatus = async (dispatch) => {
 	try {
 		const userData = await authService.getCurrentAccount();
 
-		if (userData) dispatch(login(userData));
-		else dispatch(logout());
+		if (userData) {
+			await authService.fetchInstituteInfo(userData.$id, dispatch);
+		} else dispatch(logout());
 	} catch (error) {
 		dispatch(logout());
 		console.error("User not authenticated", error);

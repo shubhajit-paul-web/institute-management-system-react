@@ -2,7 +2,7 @@ import {CircleGauge} from "lucide-react";
 import LogoutBtn from "../../Settings/LogoutBtn";
 import { useNavigate } from "react-router-dom";
 
-const AlreadyLoggedIn = () => {
+const AlreadyLoggedIn = ({emailId}) => {
 	const navigate = useNavigate();
 	
 	return (
@@ -11,7 +11,7 @@ const AlreadyLoggedIn = () => {
 			<div className="bg-bg-dark/80 p-6 rounded-lg">
 				<p className="text-[1.15rem] text-white/75">
 					<span>Logged in as:</span>
-					<span className="bg-white/15 py-1 px-3.5 rounded-lg ml-2">sheryians@gmail.com</span>
+					<span className="bg-white/15 py-1 px-3.5 rounded-lg ml-2">{emailId}</span>
 				</p>
 			</div>
 			<div className="flex justify-center items-center gap-3 pt-4">
