@@ -7,21 +7,30 @@ import authService from "../../../appwrite/auth";
 import {useDispatch} from "react-redux";
 import {login as authLogin} from "../../../features/auth/authSlice";
 import {emailRegex} from "../../../utils/RegexPatterns";
+import {Button} from "antd";
 
 const LoginForm = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const [errorMsg, setErrorMsg] = useState("");
+	const [isSubmitting, setIsSubmitting] = useState(false);
 	const EmailAddress = useRef(null);
 	const Password = useRef(null);
 
-	const {register, handleSubmit, reset} = useForm();
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: {errors},
+	} = useForm();
 
 	async function loginHandler(data) {
 		try {
 			setErrorMsg("");
+			setIsSubmitting(true);
 			await authService.login(data);
 			const accountData = await authService.getCurrentAccount();
+			console.log(accountData);
 
 			if (accountData) dispatch(authLogin(accountData));
 
@@ -53,24 +62,26 @@ const LoginForm = () => {
 						},
 					})}
 				/>
+				{errors.EmailAddress && <p className="text-red-600/85 text-base">This field is required</p>}
 
-				<InputField inputType="password" icon={<KeyRound size="1.2rem" />} ref={Password} placeholder="Password" {...register("Password", {required: "Password is required"})} />
+				<InputField inputType="password" icon={<KeyRound size="1.2rem" />} ref={Password} placeholder="Password" {...register("Password", {required: "Password is required"})} className="mt-4" />
+				{errors.Password && <p className="text-red-600/85 text-base">This field is required</p>}
 
 				<div className="text-right font-semibold text-orange-400 mt-2">
 					<Link to="/forgot-password" className="hover:underline">
 						Forgot Password?
 					</Link>
 				</div>
-				{/* error message */}
+				{/* error message from Appwrite */}
 				{errorMsg && <p className="text-base text-red-400">{errorMsg}</p>}
 
-				<button type="submit" className="w-full bg-orange-500 text-white font-semibold py-2.5 rounded-full mt-7 hover:bg-orange-500/70">
+				<Button htmlType="submit" type="primary" block iconPosition="end" size="large" className="mt-5 hover:opacity-85" style={{backgroundColor: "#BD510A"}} loading={isSubmitting}>
 					Login
-				</button>
+				</Button>
 			</form>
 			<p className="text-lg text-center mt-8">
 				Don’t have an account?{" "}
-				<Link to="/register" className="font-semibold text-orange-400 hover:underline">
+				<Link to="/signup" className="font-semibold text-orange-400 hover:underline">
 					Register
 				</Link>
 			</p>

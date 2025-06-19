@@ -1,17 +1,20 @@
+import {lazy} from "react";
+
 import {Route, Routes} from "react-router-dom";
-import AppLayout from "../layouts/AppLayout";
-import Dashboard from "../pages/Dashboard";
-import Students from "../pages/Students";
-import Courses from "../pages/Courses";
-import Classes from "../pages/Classes";
-import Payments from "../pages/Payments";
-import Teachers from "../pages/Teachers";
-import Expenses from "../pages/Expenses";
-import Salaries from "../pages/Salaries";
-import PageNotFound from "../pages/PageNotFound";
-import Settings from "../pages/Settings";
-import Login from "../pages/Login";
 import ProtectedRoute from "./ProtectedRoute";
+const AppLayout = lazy(() => import("../layouts/AppLayout"));
+const Dashboard = lazy(() => import("../pages/Dashboard"));
+const Students = lazy(() => import("../pages/Students"));
+const Courses = lazy(() => import("../pages/Courses"));
+const Classes = lazy(() => import("../pages/Classes"));
+const Payments = lazy(() => import("../pages/Payments"));
+const Teachers = lazy(() => import("../pages/Teachers"));
+const Expenses = lazy(() => import("../pages/Expenses"));
+const Salaries = lazy(() => import("../pages/Salaries"));
+const PageNotFound = lazy(() => import("../pages/PageNotFound"));
+const Settings = lazy(() => import("../pages/Settings"));
+const Login = lazy(() => import("../pages/Login"));
+const Signup = lazy(() => import("../pages/Signup"));
 
 const AppRoutes = () => {
 	return (
@@ -31,6 +34,7 @@ const AppRoutes = () => {
 				</Route>
 			</Route>
 			<Route path="/login" element={<Login />} />
+			<Route path="/signup" element={<Signup />} />
 		</Routes>
 	);
 };

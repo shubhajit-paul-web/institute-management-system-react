@@ -1,9 +1,7 @@
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {useNavigate} from "react-router-dom";
 import checkAuthStatus from "../appwrite/utils/checkAuth";
 import AlreadyLoggedIn from "../components/Auth/Login/AlreadyLoggedIn";
-import authService from "../appwrite/auth";
 import LoginForm from "../components/Auth/Login/LoginForm";
 import loginIllustration from "../assets/images/login-graphic-lady.svg"
 

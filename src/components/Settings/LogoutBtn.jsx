@@ -1,12 +1,16 @@
 import {LogOut} from "lucide-react";
 import {notifySuccess} from "../../utils/ToastNotification";
 import authService from "../../appwrite/auth";
-import { useDispatch } from "react-redux";
+import {useDispatch} from "react-redux";
+import {useState} from "react";
+import {Button} from "antd";
 
 const LogoutBtn = ({extraStyles}) => {
 	const dispatch = useDispatch();
+	const [isBtnClicked, setIsBtnClicked] = useState(false);
 
 	async function handleLogout() {
+		setIsBtnClicked(true);
 		const isLoggedOut = await authService.logout(dispatch);
 		if (isLoggedOut) {
 			notifySuccess("Logout successfuly!");
@@ -14,9 +18,9 @@ const LogoutBtn = ({extraStyles}) => {
 	}
 
 	return (
-		<button className={`${extraStyles} bg-red-500 hover:bg-red-500/75 text-white py-2 px-4 rounded-md shadow flex items-center gap-2`} onClick={handleLogout}>
-			<LogOut size="1.2rem" /> Logout
-		</button>
+		<Button type="primary" size="large" icon={<LogOut size="1.1rem" />} style={{backgroundColor: "#C02630"}} className={extraStyles + " hover:opacity-85"} loading={isBtnClicked} onClick={handleLogout}>
+			Logout
+		</Button>
 	);
 };
 

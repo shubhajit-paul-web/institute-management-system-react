@@ -48,7 +48,7 @@ export class AuthService {
 				RegistrationNumber,
 				Type,
 				EstablishedYear,
-				Logo: this.uploadLogo(Logo),
+				Logo: await this.uploadLogo(Logo),
 				About,
 				Address,
 				City,
