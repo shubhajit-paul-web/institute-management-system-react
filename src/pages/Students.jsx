@@ -1,8 +1,9 @@
+import { lazy } from "react";
 import PageWrapper from "../components/PageWrapper";
-import StudentTable from "../components/Students/StudentsTable";
-import StudentsHeader from "../components/Students/StudentsHeader";
-import AddStudentModel from "../components/Students/AddStudentModel";
 import SectionWrapper from "../components/SectionWrapper";
+const StudentTable = lazy(() => import("../components/Students/StudentsTable"));
+const StudentsHeader = lazy(() => import("../components/Students/StudentsHeader"));
+const AddStudentModel = lazy(() => import("../components/Students/AddStudentModel"));
 
 const Students = () => {
 	return (

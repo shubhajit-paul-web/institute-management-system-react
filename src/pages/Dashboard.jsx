@@ -1,11 +1,10 @@
-import {Skeleton} from "antd";
+import {lazy, useEffect, useRef} from "react";
 import PageWrapper from "../components/PageWrapper";
 import DashboardHeader from "../components/Dashboard/DashboardHeader";
-import OverviewCards from "../components/Dashboard/OverviewCards";
-import {useEffect, useRef} from "react";
 import {admissionsChart, paymentsChart} from "../utils/dashboardUtils";
-import AdmissionsOverviewChart from "../components/Dashboard/AdmissionsOverviewChart";
-import PaymentsOverviewChart from "../components/Dashboard/PaymentsOverviewChart";
+const OverviewCards = lazy(() => import("../components/Dashboard/OverviewCards"));
+const AdmissionsOverviewChart = lazy(() => import("../components/Dashboard/AdmissionsOverviewChart"));
+const PaymentsOverviewChart = lazy(() => import("../components/Dashboard/PaymentsOverviewChart"));
 
 const Dashboard = () => {
 	const admissionsChartContainer = useRef(null);

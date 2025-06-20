@@ -1,8 +1,9 @@
-import AddCoursesModel from "../components/Courses/AddCoursesModel";
-import CourseCard from "../components/Courses/CourseCard";
-import CoursesHeader from "../components/Courses/CoursesHeader";
+import { lazy } from "react";
 import PageWrapper from "../components/PageWrapper";
 import SectionWrapper from "../components/SectionWrapper";
+const AddCoursesModel =  lazy(() => import("../components/Courses/AddCoursesModel"));
+const CourseCard =  lazy(() => import("../components/Courses/CourseCard"));
+const CoursesHeader =  lazy(() => import("../components/Courses/CoursesHeader"));
 
 const Courses = () => {
 	const coursesData = [1, 2, 3];

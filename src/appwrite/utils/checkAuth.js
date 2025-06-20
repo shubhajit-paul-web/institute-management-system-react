@@ -4,7 +4,7 @@ import {logout} from "../../features/auth/authSlice";
 const checkAuthStatus = async (dispatch) => {
 	try {
 		const userData = await authService.getCurrentAccount();
-
+		
 		if (userData) {
 			await authService.fetchInstituteInfo(userData.$id, dispatch);
 		} else dispatch(logout());

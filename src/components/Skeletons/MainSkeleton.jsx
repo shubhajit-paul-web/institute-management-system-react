@@ -4,8 +4,8 @@ const MainSkeleton = () => {
 			<div className="w-full h-full space-y-4 animate-pulse flex gap-5">
 				{/* Navigation - Left side */}
 				<div className="h-full w-[8.9rem] bg-bg-dark rounded-xl p-5 flex flex-col gap-5">
-					{Array(6).fill(0).map(() => {
-						return <div className="h-full w-full bg-dark-one/80 rounded-lg" />
+					{Array(6).fill(0).map((_, index) => {
+						return <div key={index} className="h-full w-full bg-dark-one/80 rounded-lg" />
 					})}
 				</div>
 				{/* Main content - Right side */}

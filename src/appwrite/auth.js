@@ -42,7 +42,6 @@ export class AuthService {
 			}
 
 			// Store additional institute data in database
-			console.log("➡️ Creating document...");
 			const updatedDocument = await this.databases.createDocument(appwriteConfig.database.id, appwriteConfig.database.collections.instituteAccount, userID, {
 				// userId: userAccount?.$id,
 				InstituteName,
@@ -60,7 +59,6 @@ export class AuthService {
 				EmailAddress,
 				OfficialWebsite,
 			});
-			console.log("✅ Document created!");
 
 			return updatedDocument;
 		} catch (error) {
@@ -103,6 +101,7 @@ export class AuthService {
 			if (response.documents.length > 0) {
 				// Document found for the user
 				const instituteInfo = response.documents[0];
+				
 				dispatch(
 					login({
 						...instituteInfo,
@@ -120,7 +119,6 @@ export class AuthService {
 		try {
 			await this.account.deleteSessions();
 			dispatch(logout());
-			return true;
 		} catch (error) {
 			throw new Error(error.message || "Logout failed");
 		}

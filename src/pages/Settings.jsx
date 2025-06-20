@@ -1,7 +1,8 @@
+import { lazy } from "react";
 import PageWrapper from "../components/PageWrapper";
 import SectionWrapper from "../components/SectionWrapper";
-import LeftSideSection from "../components/Settings/LeftSideSection";
-import RightSideSection from "../components/Settings/RightSideSection";
+const LeftSideSection = lazy(() => import("../components/Settings/LeftSideSection"));
+const RightSideSection = lazy(() => import("../components/Settings/RightSideSection"));
 
 const Settings = () => {
 	return (
