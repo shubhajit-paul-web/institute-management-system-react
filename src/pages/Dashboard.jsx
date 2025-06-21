@@ -10,6 +10,8 @@ const Dashboard = () => {
 	const admissionsChartContainer = useRef(null);
 	const paymentsChartContainer = useRef(null);
 
+	// TODO: Response Metadata (response.total): The total field in the response metadata contains the total count of documents for that collection.
+
 	useEffect(() => {
 		const chart1 = admissionsChart(admissionsChartContainer);
 		const chart2 = paymentsChart(paymentsChartContainer);
