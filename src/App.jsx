@@ -1,30 +1,13 @@
-import {useEffect, useState} from "react";
+import PageLoader from "./components/Skeletons/PageLoader";
 import AppRoutes from "./routes/AppRoutes";
 import {ToastContainer} from "react-toastify";
-import checkAuthStatus from "./appwrite/utils/checkAuth";
-import {useDispatch, useSelector} from "react-redux";
-import PageLoader from "./components/Skeletons/PageLoader";
 import useNetworkStatus from "./hooks/useNetworkStatus";
+import useAuthStatusSync from "./hooks/useAuthStatusSync";
 
 const App = () => {
-	// Check user is logged in or not
-	useNetworkStatus();
-	const dispatch = useDispatch();
-	const [loading, setLoading] = useState(true);
-	// const [isFirstVisit, setIsFirstVisit] = useState(true);
-	const isAuthenticated = useSelector((state) => state.authReducer.status);
-
-	const verify = async () => {
-		if (!isAuthenticated) {
-			await checkAuthStatus(dispatch);
-			setLoading(false);
-		} else setLoading(false);
-	};
-
-	useEffect(() => {
-		verify();
-	}, [dispatch]);
-
+	const {loading} = useAuthStatusSync(); // Checking user auth status
+	useNetworkStatus(); // Track user’s network status
+	
 	if (loading) return <PageLoader />;
 
 	return (

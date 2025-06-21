@@ -1,28 +1,18 @@
-import {lazy, useEffect, useState} from "react";
+import {lazy} from "react";
 const SignUpForm = lazy(() => import("../components/Auth/Signup/SignUpForm"));
 import signupUserIllustration from "../assets/images/signup-user-illustration.svg";
-import {useDispatch, useSelector} from "react-redux";
-import checkAuthStatus from "../appwrite/utils/checkAuth";
+import {useSelector} from "react-redux";
 import AlreadyLoggedIn from "../components/Auth/Login/AlreadyLoggedIn";
 import AlreadyLoggedInSkeleton from "../components/Skeletons/AlreadyLoggedInSkeleton";
+import useAuthStatusSync from "../hooks/useAuthStatusSync";
 
 const Signup = () => {
-	const dispatch = useDispatch();
-	const [loading, setLoading] = useState(true);
-	const {status: isAuthenticated, instituteDetails} = useSelector((state) => state.authReducer);
-  console.log(instituteDetails);
-  
-	const verify = async () => {
-		if (!isAuthenticated) {
-			await checkAuthStatus(dispatch);
-			setLoading(false);
-		}
-	};
-
-	useEffect(() => {
-		verify();
-	}, [dispatch]);
-
+	const {loading, isAuthenticated} = useAuthStatusSync();
+	const {instituteDetails} = useSelector((state) => state.authReducer);
+	
+	console.log(instituteDetails);
+	
+	
 	if (loading) return <AlreadyLoggedInSkeleton />;
 	if (isAuthenticated) return <AlreadyLoggedIn emailId={instituteDetails?.EmailAddress} />;
 

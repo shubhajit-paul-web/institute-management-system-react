@@ -5,9 +5,9 @@ import {useForm} from "react-hook-form";
 import {useRef, useState} from "react";
 import authService from "../../../appwrite/auth";
 import {useDispatch} from "react-redux";
-import {login as authLogin} from "../../../features/auth/authSlice";
 import {emailRegex} from "../../../utils/RegexPatterns";
 import {Button} from "antd";
+import checkAuthStatus from "../../../appwrite/utils/checkAuth"
 
 const LoginForm = () => {
 	const navigate = useNavigate();
@@ -20,7 +20,6 @@ const LoginForm = () => {
 	const {
 		register,
 		handleSubmit,
-		reset,
 		formState: {errors},
 	} = useForm();
 
@@ -29,14 +28,12 @@ const LoginForm = () => {
 			setErrorMsg("");
 			setIsSubmitting(true);
 			await authService.login(data);
-			const accountData = await authService.getCurrentAccount();
+			await checkAuthStatus(dispatch);
 
-			if (accountData) dispatch(authLogin(accountData));
-
-			reset(); // clear login form input values
 			navigate("/");
 		} catch (error) {
 			setErrorMsg(error.message);
+			setIsSubmitting(false);
 		}
 	}
 
