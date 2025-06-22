@@ -1,13 +1,13 @@
 import {useForm} from "react-hook-form";
-import InputWrapper from "../FormUtils/InputWrapper";
 import {SquarePlus} from "lucide-react";
 import {addStudent} from "../../features/students/studentsSlice";
 import {useDispatch} from "react-redux";
 import {closeModel} from "../../features/toggleModelView/toggleModelSlice";
 import {message} from "antd";
+import InputField from "../Auth/Signup/InputField";
 
 const AddStudentForm = () => {
-	const {register, handleSubmit, reset} = useForm();
+	const {register, handleSubmit, reset, errors} = useForm();
 	const [messageApi, contextHolder] = message.useMessage();
 	const dispatch = useDispatch();
 
@@ -41,141 +41,54 @@ const AddStudentForm = () => {
 		}
 	}
 
-	const inputStyles = "dark:bg-gray-800 border dark:border-gray-600 text-white rounded px-3.5 py-2.5 w-full focus:outline-3 focus:outline-rose-400";
-
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-10 text-white rounded">
 			{contextHolder}
 
-			<InputWrapper name="Student's Photo" required>
-				<input
-					type="file"
-					accept="image/*"
-					{...register("photo", {required: true})}
-					className="w-full block text-sm text-gray-300
-               file:mr-4 file:py-1 file:px-3
-               file:rounded file:border-0
-               file:text-sm file:font-semibold
-               file:bg-rose-400 file:text-white
-               hover:file:bg-rose-500
-               dark:bg-gray-800 dark:border dark:border-gray-600
-               rounded px-3 py-2"
-				/>
-			</InputWrapper>
+			{/* Row 1 */}
+			<InputField label="Student's Photo" type="file" register={register} name="photo" errors={errors} />
+			<InputField label="Student's Name" register={register} name="studentName" errors={errors} placeholder="Enter student's name" />
 
-			<InputWrapper name="Student's Name" required>
-				<input {...register("studentName", {required: true})} className={inputStyles} placeholder="Enter student's name" />
-			</InputWrapper>
+			{/* Row 2 */}
+			<InputField label="Father's Name" register={register} name="fatherName" errors={errors} placeholder="Enter father's name" />
+			<InputField label="Mother's Name" register={register} name="motherName" errors={errors} placeholder="Enter mother's name" />
 
-			<InputWrapper name="Father's Name" required>
-				<input {...register("fatherName", {required: true})} className={inputStyles} placeholder="Enter father's name" />
-			</InputWrapper>
+			{/* Row 3 */}
+			<InputField type="select" label="Gender" register={register} name="gender" errors={errors} options={["Male", "Female", "Others"]} />
+			<InputField type="date" label="DOB" register={register} name="dob" errors={errors} />
 
-			<InputWrapper name="Mother's Name" required>
-				<input {...register("motherName", {required: true})} className={inputStyles} placeholder="Enter mother's name" />
-			</InputWrapper>
+			{/* Row 4 */}
+			<InputField type="select" label="Religion" register={register} name="religion" errors={errors} options={["Hindu", "Muslim", "Christian", "Jain", "Others"]} />
+			<InputField type="number" label="Mobile" register={register} name="mobile" errors={errors} placeholder="Enter mobile number" />
 
-			<InputWrapper name="Gender" required>
-				<select {...register("gender", {required: true})} className={inputStyles}>
-					<option value="" selected disabled>
-						Select Gender
-					</option>
-					<option value="male">Male</option>
-					<option value="female">Female</option>
-					<option value="other">Other</option>
-				</select>
-			</InputWrapper>
+			{/* Row 5 */}
+			<InputField type="email" label="Email" register={register} name="email" errors={errors} placeholder="Enter email id" />
+			<InputField type="select" label="Course" register={register} name="course" errors={errors} options={["Web Development", "Frontend Development", "Backend Development", "DSA", "System Design"]} />
 
-			<InputWrapper name="DOB" required>
-				<input type="date" {...register("dob", {required: true})} className={inputStyles} />
-			</InputWrapper>
+			{/* Row 6 */}
+			<InputField type="select" label="Batch" register={register} name="batch" errors={errors} options={["Batch A", "Batch B", "Batch C"]} />
+			<InputField type="select" label="Student Type" register={register} name="studentType" errors={errors} options={["New", "Returning", "Referral"]} />
 
-			<InputWrapper name="Religion" required>
-				<select {...register("religion", {required: true})} className={inputStyles}>
-					<option value="" selected disabled>
-						Select Religion
-					</option>
-					<option value="hindu">Hindu</option>
-					<option value="muslim">Muslim</option>
-					<option value="christian">Christian</option>
-					<option value="jain">Jain</option>
-					<option value="other">Other</option>
-				</select>
-			</InputWrapper>
+			{/* Row 7 */}
+			<InputField label="Address" register={register} name="address" errors={errors} placeholder="Enter full address" />
+			<InputField label="City" register={register} name="city" errors={errors} placeholder="city" />
 
-			<InputWrapper name="Mobile" required>
-				<input type="number" {...register("mobile", {required: true})} className={inputStyles} placeholder="Enter mobile number" />
-			</InputWrapper>
+			{/* Row 8 */}
+			<InputField label="City" register={register} name="state" errors={errors} placeholder="State" />
+			<InputField label="Country" register={register} name="country" errors={errors} placeholder="Country" />
 
-			<InputWrapper name="Email" required>
-				<input type="email" {...register("email", {required: true})} className={inputStyles} placeholder="Enter email id" />
-			</InputWrapper>
+			{/* Row 9 */}
+			<InputField type="number" label="Pincode" register={register} name="pincode" errors={errors} placeholder="Pincode" />
+			<InputField label="Previous School" register={register} name="previousSchool" placeholder="(Optional) - Name of previous school" />
 
-			<InputWrapper name="Course" required>
-				<select {...register("course", {required: true})} className={inputStyles}>
-					<option value="" selected disabled>
-						Select Course
-					</option>
-					<option value="web_dev">Web Development</option>
-					<option value="python_basics">Python Basics</option>
-					<option value="design_uiux">UI/UX Design</option>
-				</select>
-			</InputWrapper>
-
-			<InputWrapper name="Batch" required>
-				<select {...register("batch", {required: true})} className={inputStyles}>
-					<option value="" selected disabled>
-						Select Batch
-					</option>
-					<option value="Batch A">Batch A</option>
-					<option value="Batch A">Batch B</option>
-					<option value="Batch A">Batch C</option>
-				</select>
-			</InputWrapper>
-
-			<InputWrapper name="Student Type" required>
-				<select {...register("studentType", {required: true})} className={inputStyles}>
-					<option value="" selected disabled>
-						Select Student Type
-					</option>
-					<option value="New">New</option>
-					<option value="Returning">Returning</option>
-					<option value="Referral">Referral</option>
-				</select>
-			</InputWrapper>
-
-			<InputWrapper name="Address" required>
-				<input {...register("address", {required: true})} className={inputStyles} placeholder="Enter full address" />
-			</InputWrapper>
-
-			<InputWrapper name="City" required>
-				<input {...register("city", {required: true})} className={inputStyles} placeholder="City" />
-			</InputWrapper>
-
-			<InputWrapper name="State" required>
-				<input {...register("state", {required: true})} className={inputStyles} placeholder="State" />
-			</InputWrapper>
-
-			<InputWrapper name="Country" required>
-				<input {...register("country", {required: true})} className={inputStyles} placeholder="Country" />
-			</InputWrapper>
-
-			<InputWrapper name="Pincode" required>
-				<input type="number" {...register("pincode", {required: true})} className={inputStyles} placeholder="Pincode" />
-			</InputWrapper>
-
-			<InputWrapper name="Previous School">
-				<input {...register("previousSchool")} className={inputStyles} placeholder="(Optional) - Name of previous school" />
-			</InputWrapper>
-
+			{/* Row 10 */}
 			<div className="col-span-2">
-				<InputWrapper name="Extra info/note">
-					<textarea {...register("extraNote")} className={`${inputStyles} h-[10rem]`} placeholder="(Optional) - Extra notes or info" />
-				</InputWrapper>
+				<InputField isTextArea="true" label="Extra info/note" register={register} name="extraNote" placeholder="(Optional) - Extra notes or info" />
 			</div>
 
+			{/* Submit button */}
 			<div className="col-span-full mt-5">
-				<button type="submit" className="transition hover:scale-[1.03] bg-blue-500/80 text-white font-medium px-6 py-3 rounded flex items-center gap-2.5">
+				<button type="submit" className="transition hover:scale-[1.03] bg-orange-500/80 text-white font-medium px-6 py-3 rounded flex items-center gap-2.5">
 					<SquarePlus size="1.25rem" /> Add Student
 				</button>
 			</div>

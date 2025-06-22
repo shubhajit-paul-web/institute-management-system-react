@@ -1,7 +1,7 @@
 import { lazy } from "react";
 import PageWrapper from "../components/PageWrapper";
 import SectionWrapper from "../components/SectionWrapper";
-const AddCoursesModel =  lazy(() => import("../components/Courses/AddCoursesModel"));
+import Model from "../components/Model";
 const CourseCard =  lazy(() => import("../components/Courses/CourseCard"));
 const CoursesHeader =  lazy(() => import("../components/Courses/CoursesHeader"));
 
@@ -18,7 +18,7 @@ const Courses = () => {
 					})}
 				</div>
 			</SectionWrapper>
-			<AddCoursesModel />
+			<Model modelName="Add Course" reducerName="courseModel"></Model>
 		</PageWrapper>
 	);
 };
