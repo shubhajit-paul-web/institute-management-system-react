@@ -3,11 +3,13 @@ import AppRoutes from "./routes/AppRoutes";
 import {ToastContainer} from "react-toastify";
 import useNetworkStatus from "./hooks/useNetworkStatus";
 import useAuthStatusSync from "./hooks/useAuthStatusSync";
+import useDynamicTitle from "./hooks/useDynamicTitle";
 
 const App = () => {
 	const {loading} = useAuthStatusSync(); // Checking user auth status
 	useNetworkStatus(); // Track user’s network status
-	
+	useDynamicTitle() // Set page title based on current route
+
 	if (loading) return <PageLoader />;
 
 	return (
