@@ -1,50 +1,59 @@
 import {useForm} from "react-hook-form";
-import {SquarePlus} from "lucide-react";
-import {addStudent} from "../../features/students/studentsSlice";
-import {useDispatch} from "react-redux";
+import {UserRoundPlus} from "lucide-react";
+import {useDispatch, useSelector} from "react-redux";
 import {closeModel} from "../../features/toggleModelView/toggleModelSlice";
-import {message} from "antd";
+import {Button} from "antd";
 import InputField from "../Auth/Signup/InputField";
+import studentsService from "../../appwrite/services/studentsService";
+import {nanoid} from "@reduxjs/toolkit";
+import {useState} from "react";
+import {notifyError, notifySuccess} from "../../utils/ToastNotification";
 
 const AddStudentForm = () => {
-	const {register, handleSubmit, reset, errors} = useForm();
-	const [messageApi, contextHolder] = message.useMessage();
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: {errors},
+	} = useForm();
+	const [appwriteError, setAppwriteError] = useState("");
+	const [loading, setLoading] = useState(false);
 	const dispatch = useDispatch();
+	const instituteID = useSelector((state) => state.authReducer.instituteDetails?.$id);
 
-	function onSubmit(data) {
-		let imgFile = data?.photo[0];
-		const reader = new FileReader();
+	async function addStudent(studentData) {
+		setAppwriteError("");
+		setLoading(true);
 
-		reader.onloadend = () => {
-			const studentData = {
+		try {
+			const createdStudent = await studentsService.addStudent({
+				instituteID,
+				studentId: nanoid(10),
 				admissionDate: Date.now(),
-				...data,
-				photo: reader.result,
-			};
-
-			dispatch(addStudent(studentData));
-
-			console.log(studentData);
-
-			// Admission success message
-			messageApi.open({
-				type: "success",
-				content: `Admission successful for ${data?.studentName}`,
+				...studentData,
+				photo: studentData.photo[0],
 			});
+			console.log(createdStudent);
+			
+			if (createdStudent) {
+				dispatch({type: "addStudent", payload: createdStudent});
 
-			dispatch(closeModel());
-			reset(); // clear all the input fields
-		};
-
-		if (imgFile) {
-			reader.readAsDataURL(imgFile);
+				// Admission success message
+				notifySuccess(`Admission successful for ${studentData?.studentName}`);
+				dispatch(closeModel());
+				reset(); // clear all the input fields
+			}
+		} catch (error) {
+			console.log(error);
+			notifyError("Invalid Data!");
+			setAppwriteError(error.message);
+		} finally {
+			setLoading(false);
 		}
 	}
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-10 text-white rounded">
-			{contextHolder}
-
+		<form onSubmit={handleSubmit(addStudent)} className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-10 text-white rounded">
 			{/* Row 1 */}
 			<InputField label="Student's Photo" type="file" register={register} name="photo" errors={errors} />
 			<InputField label="Student's Name" register={register} name="studentName" errors={errors} placeholder="Enter student's name" />
@@ -70,7 +79,7 @@ const AddStudentForm = () => {
 			<InputField type="select" label="Student Type" register={register} name="studentType" errors={errors} options={["New", "Returning", "Referral"]} />
 
 			{/* Row 7 */}
-			<InputField label="Address" register={register} name="address" errors={errors} placeholder="Enter full address" />
+			<InputField label="Full Address" register={register} name="fullAddress" errors={errors} placeholder="Enter full address" />
 			<InputField label="City" register={register} name="city" errors={errors} placeholder="city" />
 
 			{/* Row 8 */}
@@ -86,12 +95,13 @@ const AddStudentForm = () => {
 				<InputField isTextArea="true" label="Extra info/note" register={register} name="extraNote" placeholder="(Optional) - Extra notes or info" />
 			</div>
 
+			{/* Appwrite Error message */}
+			<p className="col-span-2 text-red-500/85">{appwriteError}</p>
+
 			{/* Submit button */}
-			<div className="col-span-full mt-5">
-				<button type="submit" className="transition hover:scale-[1.03] bg-orange-500/80 text-white font-medium px-6 py-3 rounded flex items-center gap-2.5">
-					<SquarePlus size="1.25rem" /> Add Student
-				</button>
-			</div>
+			<Button loading={loading} htmlType="submit" type="primary" size="large" icon={<UserRoundPlus size="1.05rem" />} className="mt-8 w-full py-3 rounded-md font-bold hover:opacity-85" style={{width: "10rem", backgroundColor: "#e36a08", padding: "25px 30px"}}>
+				Add Student
+			</Button>
 		</form>
 	);
 };

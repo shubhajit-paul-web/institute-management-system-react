@@ -19,6 +19,7 @@ export class AuthService {
 	async uploadFile(file) {
 		try {
 			const uploadedFile = await this.bucket.createFile(appwriteConfig.storage.bucketId, ID.unique(), file);
+			
 			return uploadedFile?.$id;
 		} catch (error) {
 			console.error(`Appwrite :: uploadFile error: ${error}`);

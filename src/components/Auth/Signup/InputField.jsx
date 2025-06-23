@@ -47,7 +47,7 @@ const InputField = ({
           type={type}
           placeholder={placeholder}
           className={`${className} w-full p-4 mt-1 bg-[#2C2F38] text-white border border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 file:bg-[#e36a08] file:text-white file:text-sm file:py-0.5 file:px-3 file:rounded-md file:border-0 file:cursor-pointer`}
-          accept={type === "file" && "image/*"}
+          accept={type === "file" ? "image/*" : "false"}
         />
       )}
 

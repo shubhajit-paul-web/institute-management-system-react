@@ -1,4 +1,4 @@
-import {createSlice, nanoid} from "@reduxjs/toolkit";
+import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
 	students: [],
@@ -9,10 +9,7 @@ export const studentsSlice = createSlice({
 	initialState,
 	reducers: {
 		addStudent: (state, action) => {
-			state.students?.push({
-				id: nanoid(),
-				data: action.payload,
-			});
+			state.students.push(action.payload);
 		},
 		removeStudent: (state, action) => {
 			state = state.students?.filter((student) => student.id !== action.payload);

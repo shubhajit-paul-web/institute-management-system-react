@@ -12,14 +12,27 @@ export class StudentsService {
 		this.bucket = new Storage(this.client);
 	}
 
+	// File/image upload service
+	async uploadFile(file) {
+		try {
+			const uploadedFile = await this.bucket.createFile(appwriteConfig.storage.bucketId, ID.unique(), file);
+			
+			return uploadedFile?.$id;
+		} catch (error) {
+			console.error(`Appwrite :: uploadFile error: ${error}`);
+			return false;
+		}
+	}
+
 	// Add new student
-	async addStudent({studentName, fatherName, motherName, photo, gender, dob, religion, mobile, email, course, batch, studentType, fullAddress, city, state, country, pincode, previousSchool, extraInfo, studentId}) {
+	async addStudent({admissionDate, studentName, fatherName, motherName, photo, gender, dob, religion, mobile, email, course, batch, studentType, fullAddress, city, state, country, pincode, previousSchool, extraInfo, studentId, instituteID}) {
 		try {
 			return await this.databases.createDocument(appwriteConfig.database.id, appwriteConfig.database.collections.students, ID.unique(), {
+				admissionDate,
 				studentName,
 				fatherName,
 				motherName,
-				photo,
+				photo: await this.uploadFile(photo),
 				gender,
 				dob,
 				religion,
@@ -36,6 +49,7 @@ export class StudentsService {
 				previousSchool,
 				extraInfo,
 				studentId,
+				instituteID,
 			});
 		} catch (error) {
 			console.error(`Appwrite :: addStudent error: ${error}`);
@@ -75,7 +89,7 @@ export class StudentsService {
 	// Remove student
 	async removeStudent(studentID) {
 		try {
-			return await this.databases.deleteDocument(appwriteConfig.database.id, appwriteConfig.collections.students, studentID);
+			return await this.databases.deleteDocument(appwriteConfig.database.id, appwriteConfig.database.collections.students, studentID);
 		} catch (error) {
 			console.error(`Appwrite :: removeStudent error: ${error}`);
 			return false;
@@ -85,7 +99,7 @@ export class StudentsService {
 	// Get student details
 	async getStudent(studentID) {
 		try {
-			return await this.databases.getDocument(appwriteConfig.database.id, appwriteConfig.collections.students, studentID);
+			return await this.databases.getDocument(appwriteConfig.database.id, appwriteConfig.database.collections.students, studentID);
 		} catch (error) {
 			console.error(`Appwrite :: getStudent error: ${error}`);
 			return false;
@@ -95,21 +109,16 @@ export class StudentsService {
 	// Get all students details
 	async getAllStudents() {
 		try {
-			return await this.databases.listDocuments(appwriteConfig.database.id, appwriteConfig.collections.students);
+			return await this.databases.listDocuments(appwriteConfig.database.id, appwriteConfig.database.collections.students);
 		} catch (error) {
 			console.error(`Appwrite :: getAllStudents error: ${error}`);
 			return false;
 		}
 	}
 
-	// File/image upload service
-	async uploadFile(file) {
-		try {
-			return await this.bucket.createFile(appwriteConfig.storage.bucketId, ID.unique(), file);
-		} catch (error) {
-			console.error(`Appwrite :: uploadFile error: ${error}`);
-			return false;
-		}
+	// Generate the file view URL
+	generateFileURL(fileId) {
+		return this.bucket.getFileView(appwriteConfig.storage.bucketId, fileId);
 	}
 }
 
