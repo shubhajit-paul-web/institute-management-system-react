@@ -7,7 +7,8 @@ import authService from "../../../appwrite/auth";
 import {useDispatch} from "react-redux";
 import {emailRegex} from "../../../utils/RegexPatterns";
 import {Button} from "antd";
-import checkAuthStatus from "../../../appwrite/utils/checkAuth"
+import checkAuthStatus from "../../../appwrite/utils/checkAuth";
+import getFriendlyErrorMessage from "../../../utils/appwriteErrorMessages";
 
 const LoginForm = () => {
 	const navigate = useNavigate();
@@ -24,15 +25,17 @@ const LoginForm = () => {
 	} = useForm();
 
 	async function loginHandler(data) {
+		setErrorMsg("");
+		setIsSubmitting(true);
+
 		try {
-			setErrorMsg("");
-			setIsSubmitting(true);
 			await authService.login(data);
 			await checkAuthStatus(dispatch);
 
 			navigate("/");
 		} catch (error) {
-			setErrorMsg(error.message);
+			setErrorMsg(getFriendlyErrorMessage(error));
+		} finally {
 			setIsSubmitting(false);
 		}
 	}

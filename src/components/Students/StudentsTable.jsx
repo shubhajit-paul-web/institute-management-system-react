@@ -1,9 +1,10 @@
-import { useDispatch, useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import studentsService from "../../appwrite/services/studentsService";
 import TableHeader from "./TableHeader";
-import { addStudent } from "../../features/students/studentsSlice";
-import { useEffect, useState } from "react";
-import { formatDateForDisplay } from "../../utils/DateTimeUtils";
+import {addStudent} from "../../features/students/studentsSlice";
+import {useEffect, useState} from "react";
+import {formatDateForDisplay} from "../../utils/DateTimeUtils";
+import SkeletonBlock from "../Skeletons/SkeletonBlock";
 
 const StudentTable = () => {
 	const [loading, setLoading] = useState(true);
@@ -14,23 +15,28 @@ const StudentTable = () => {
 		try {
 			const data = await studentsService.getAllStudents();
 			if (data) {
-				dispatch(addStudent(...data.documents));
+				dispatch(addStudent(data.documents));
 			}
 		} catch (error) {
 			console.error("Failed to fetch students:", error);
 		} finally {
 			setLoading(false);
 		}
-	}
+	};
 
 	useEffect(() => {
 		fetchStudents();
 	}, [dispatch]);
 
-	if (loading) return <h1 className="text-xl text-white/80">Data fetching...</h1>
+	if (loading) {
+		return (
+			<SkeletonBlock height="h-15" className="text-lg text-white/70 text-center content-center">
+				Loading...
+			</SkeletonBlock>
+		);
+	}
 
-	console.log(studentsData);
-	
+	// console.log(studentsData);
 
 	const tableRowStyles = "px-4 py-4 border-b dark:text-[#E6EDF3] dark:border-[#30363D]"; // styles for table data
 
@@ -48,7 +54,7 @@ const StudentTable = () => {
 									<td className={tableRowStyles}>{student?.studentId}</td>
 									<td className={`${tableRowStyles} flex items-center gap-3`}>
 										<img src={studentsService.generateFileURL(student?.photo)} alt="avatar" className="w-9 aspect-square object-cover object-center rounded-full" />
-										{student.name}
+										{student?.studentName}
 									</td>
 									<td className={tableRowStyles}>{student?.course}</td>
 									<td className={tableRowStyles}>{student?.batch}</td>

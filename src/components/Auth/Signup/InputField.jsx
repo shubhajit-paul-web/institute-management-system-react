@@ -20,7 +20,7 @@ const InputField = ({
 
       {isTextArea ? (
         <textarea
-          {...register(name, { required: `${label} is required` })}
+          {...register(name, { required: errors && `${label} is required` })}
           id={lableID}
           placeholder={placeholder}
           rows={rows || 5}

@@ -9,7 +9,11 @@ export const studentsSlice = createSlice({
 	initialState,
 	reducers: {
 		addStudent: (state, action) => {
-			state.students.push(action.payload);
+			if (Array.isArray(action.payload)) {
+				state.students = action.payload;
+			} else {
+				state.students.push(action.payload);
+			}
 		},
 		removeStudent: (state, action) => {
 			state = state.students?.filter((student) => student.id !== action.payload);

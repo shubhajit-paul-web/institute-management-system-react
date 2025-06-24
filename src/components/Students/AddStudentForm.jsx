@@ -8,20 +8,22 @@ import studentsService from "../../appwrite/services/studentsService";
 import {nanoid} from "@reduxjs/toolkit";
 import {useState} from "react";
 import {notifyError, notifySuccess} from "../../utils/ToastNotification";
+import {addStudent} from "../../features/students/studentsSlice";
 
 const AddStudentForm = () => {
+	const dispatch = useDispatch();
+	const [loading, setLoading] = useState(false);
+	const [appwriteError, setAppwriteError] = useState("");
+	const instituteID = useSelector((state) => state.authReducer.instituteDetails?.$id);
+
 	const {
 		register,
 		handleSubmit,
 		reset,
 		formState: {errors},
 	} = useForm();
-	const [appwriteError, setAppwriteError] = useState("");
-	const [loading, setLoading] = useState(false);
-	const dispatch = useDispatch();
-	const instituteID = useSelector((state) => state.authReducer.instituteDetails?.$id);
 
-	async function addStudent(studentData) {
+	async function uploadStudent(studentData) {
 		setAppwriteError("");
 		setLoading(true);
 
@@ -33,19 +35,16 @@ const AddStudentForm = () => {
 				...studentData,
 				photo: studentData.photo[0],
 			});
-			console.log(createdStudent);
-			
-			if (createdStudent) {
-				dispatch({type: "addStudent", payload: createdStudent});
 
-				// Admission success message
+			if (createdStudent) {
+				dispatch(addStudent(createdStudent));
+
 				notifySuccess(`Admission successful for ${studentData?.studentName}`);
 				dispatch(closeModel());
 				reset(); // clear all the input fields
 			}
 		} catch (error) {
-			console.log(error);
-			notifyError("Invalid Data!");
+			notifyError("Something went wrong.");
 			setAppwriteError(error.message);
 		} finally {
 			setLoading(false);
@@ -53,7 +52,7 @@ const AddStudentForm = () => {
 	}
 
 	return (
-		<form onSubmit={handleSubmit(addStudent)} className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-10 text-white rounded">
+		<form onSubmit={handleSubmit(uploadStudent)} className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-10 text-white rounded">
 			{/* Row 1 */}
 			<InputField label="Student's Photo" type="file" register={register} name="photo" errors={errors} />
 			<InputField label="Student's Name" register={register} name="studentName" errors={errors} placeholder="Enter student's name" />
