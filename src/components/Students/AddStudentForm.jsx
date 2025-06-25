@@ -3,7 +3,7 @@ import {UserRoundPlus} from "lucide-react";
 import {useDispatch, useSelector} from "react-redux";
 import {closeModel} from "../../features/toggleModelView/toggleModelSlice";
 import {Button} from "antd";
-import InputField from "../Auth/Signup/InputField";
+import InputField from "../InputField";
 import studentsService from "../../appwrite/services/studentsService";
 import {nanoid} from "@reduxjs/toolkit";
 import {useState} from "react";

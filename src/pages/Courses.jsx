@@ -2,6 +2,7 @@ import { lazy } from "react";
 import PageWrapper from "../components/PageWrapper";
 import SectionWrapper from "../components/SectionWrapper";
 import Model from "../components/Model";
+import AddCourseForm from "../components/Courses/AddCourseForm";
 const CourseCard =  lazy(() => import("../components/Courses/CourseCard"));
 const CoursesHeader =  lazy(() => import("../components/Courses/CoursesHeader"));
 
@@ -18,7 +19,9 @@ const Courses = () => {
 					})}
 				</div>
 			</SectionWrapper>
-			<Model modelName="Add Course" reducerName="courseModel"></Model>
+			<Model modelName="Add Course" reducerName="courseModel" width="w-6/11" className="dark:bg-bg-surface-dark/70">
+				<AddCourseForm />
+			</Model>
 		</PageWrapper>
 	);
 };
