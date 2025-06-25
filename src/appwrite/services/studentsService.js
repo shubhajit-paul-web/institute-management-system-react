@@ -1,5 +1,5 @@
 import appwriteConfig from "../../config/appwriteConfig";
-import {Client, ID, Databases, Storage} from "appwrite";
+import {Client, ID, Databases, Storage, Query} from "appwrite";
 
 export class StudentsService {
 	client = new Client();
@@ -16,7 +16,7 @@ export class StudentsService {
 	async uploadFile(file) {
 		try {
 			const uploadedFile = await this.bucket.createFile(appwriteConfig.storage.bucketId, ID.unique(), file);
-			
+
 			return uploadedFile?.$id;
 		} catch (error) {
 			console.error(`Appwrite :: uploadFile error: ${error}`);
@@ -107,9 +107,9 @@ export class StudentsService {
 	}
 
 	// Get all students details
-	async getAllStudents() {
+	async getAllStudents(instituteID) {
 		try {
-			return await this.databases.listDocuments(appwriteConfig.database.id, appwriteConfig.database.collections.students);
+			return await this.databases.listDocuments(appwriteConfig.database.id, appwriteConfig.database.collections.students, [Query.equal("instituteID", instituteID)]);
 		} catch (error) {
 			console.error(`Appwrite :: getAllStudents error: ${error}`);
 			return false;

@@ -5,15 +5,17 @@ import {addStudent} from "../../features/students/studentsSlice";
 import {useEffect, useState} from "react";
 import {formatDateForDisplay} from "../../utils/DateTimeUtils";
 import SkeletonBlock from "../Skeletons/SkeletonBlock";
+import {Link} from "react-router-dom";
 
 const StudentTable = () => {
 	const [loading, setLoading] = useState(true);
 	const dispatch = useDispatch();
-	const studentsData = useSelector((state) => state.studentsReducer.students);
+	const instituteID = useSelector((state) => state.authReducer.instituteDetails?.$id);
+	const studentsData = useSelector((state) => state.studentsReducer.filteredStudents);
 
 	const fetchStudents = async () => {
 		try {
-			const data = await studentsService.getAllStudents();
+			const data = await studentsService.getAllStudents(instituteID);
 			if (data) {
 				dispatch(addStudent(data.documents));
 			}
@@ -36,13 +38,11 @@ const StudentTable = () => {
 		);
 	}
 
-	// console.log(studentsData);
-
-	const tableRowStyles = "px-4 py-4 border-b dark:text-[#E6EDF3] dark:border-[#30363D]"; // styles for table data
+	const tableRowStyles = "px-4 py-4 dark:text-[#E6EDF3]"; // styles for table data
 
 	return (
 		<div className="overflow-x-auto rounded-lg">
-			<table className="min-w-full table-auto">
+			<table className="min-w-full table-auto overflow-x-scroll">
 				{/* table header */}
 				<TableHeader fields={["ID", "Student", "Course", "Batch", "Email", "Mobile", "Admission Date", "Action"]} />
 				{/* table body */}
@@ -50,25 +50,29 @@ const StudentTable = () => {
 					{studentsData?.length === 0 ||
 						studentsData?.map((student) => {
 							return (
-								<tr className="dark:even:bg-[#0D1117] dark:odd:bg-transparent dark:hover:bg-[#1A2230] transition" key={student?.ID}>
+								<tr className="dark:even:bg-[#0D1117] dark:odd:bg-transparent border-b dark:border-[#30363D] dark:hover:bg-[#1A2230] transition" key={student?.studentId}>
 									<td className={tableRowStyles}>{student?.studentId}</td>
 									<td className={`${tableRowStyles} flex items-center gap-3`}>
 										<img src={studentsService.generateFileURL(student?.photo)} alt="avatar" className="w-9 aspect-square object-cover object-center rounded-full" />
-										{student?.studentName}
+										<span className="line-clamp-1">{student?.studentName}</span>
 									</td>
 									<td className={tableRowStyles}>{student?.course}</td>
 									<td className={tableRowStyles}>{student?.batch}</td>
-									<td className={tableRowStyles}>{student?.email}</td>
+									<td className={tableRowStyles}>
+										<span className="line-clamp-1">{student?.email}</span>
+									</td>
 									<td className={tableRowStyles}>{student?.mobile}</td>
 									<td className={tableRowStyles}>{formatDateForDisplay(student?.admissionDate)}</td>
-									<td className={`${tableRowStyles} opacity-60 dark:hover:text-sky-500 cursor-pointer`}>View</td>
+									<td className={`${tableRowStyles} opacity-60 dark:hover:text-sky-500 cursor-pointer`}>
+										<Link to={`/students/${student?.studentId}`}>View</Link>
+									</td>
 								</tr>
 							);
 						})}
 				</tbody>
 			</table>
 			{/* No data found */}
-			{studentsData?.length === 0 ? <div className="text-lg text-center font-medium py-4 dark:bg-bg-dark dark:text-gray-600">No students found...</div> : ""}
+			{studentsData?.length === 0 ? <div className="text-lg text-center font-medium py-8 dark:bg-bg-dark dark:text-gray-600">No students found...</div> : ""}
 		</div>
 	);
 };

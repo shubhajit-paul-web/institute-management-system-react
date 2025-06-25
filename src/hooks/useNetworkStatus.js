@@ -1,13 +1,20 @@
-import {useEffect} from "react";
-import { notifyError, notifySuccess } from "../utils/ToastNotification";
+import {useEffect, useState} from "react";
+import {notifySuccess} from "../utils/ToastNotification";
 
+/**
+ * @function Track user’s network status
+ * @returns Network Status
+ */
 const useNetworkStatus = () => {
+	const [networkStatus, setNetworkStatus] = useState(true);
+
 	useEffect(() => {
 		window.addEventListener("online", () => {
-            notifySuccess("You're connected again!");
+			notifySuccess("You're connected again!");
+			setNetworkStatus(true);
 		});
 		window.addEventListener("offline", () => {
-            notifyError("You’re offline.");
+			setNetworkStatus(false);
 		});
 
 		return () => {
@@ -15,6 +22,8 @@ const useNetworkStatus = () => {
 			window.removeEventListener("offline");
 		};
 	}, []);
+
+	return networkStatus;
 };
 
 export default useNetworkStatus;
