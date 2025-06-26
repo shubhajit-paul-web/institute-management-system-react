@@ -10,6 +10,7 @@ const InputField = ({
   isTextArea,
   rows,
   options,
+  optionsValue = false,
   className,
 }) => {
   const lableID = useId();
@@ -35,7 +36,7 @@ const InputField = ({
           <option value="">Select {label}</option>
           {options &&
             options.map((option, index) => (
-              <option key={index} value={option}>
+              <option key={index} value={optionsValue || option}>
                 {option}
               </option>
             ))}
