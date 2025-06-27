@@ -3,8 +3,10 @@ import InputField from "../InputField";
 import {Button} from "antd";
 import {CircleFadingPlus, Plus, Trash2} from "lucide-react";
 import {useState} from "react";
+import FieldArrayButtons, {RemoveField} from "../FormUtils/FieldArrayButtons";
 
 const AddCourseForm = () => {
+	const [_, setRerender] = useState(0);
 	const [allInstructors] = useState([
 		{
 			_id: "t1",
@@ -46,15 +48,23 @@ const AddCourseForm = () => {
 		register,
 		control,
 		handleSubmit,
+		setValue,
+		getValues,
 		formState: {errors},
 	} = useForm({
 		defaultValues: {
 			faqs: [{question: "", answer: ""}],
 			instructors: [{instructorId: "", role: ""}],
+			syllabus: [
+				{
+					module: "",
+					lessons: [""],
+				},
+			],
 		},
 	});
 
-	// Set up field array for dynamically adding/removing FAQs
+	// Set up field array for dynamically adding/removing (FAQs)
 	const {
 		fields: faqFields,
 		append: appendFaq,
@@ -64,7 +74,7 @@ const AddCourseForm = () => {
 		name: "faqs",
 	});
 
-	// Set up field array for dynamically adding/removing instructors
+	// Set up field array for dynamically adding/removing (instructors)
 	const {
 		fields: instructorFields,
 		append: appendInstructor,
@@ -73,6 +83,24 @@ const AddCourseForm = () => {
 		control,
 		name: "instructors",
 	});
+
+	// Field array for syllabus (modules)
+	const {fields: ModuleFields, append: appendModule, remove: removeModule} = useFieldArray({control, name: "syllabus"});
+
+	const handleAddLesson = (moduleIndex) => {
+		const current = getValues(`syllabus.${moduleIndex}.lessons`) || [];
+		setValue(`syllabus.${moduleIndex}.lessons`, [...current, ""]);
+		setRerender((prev) => ++prev);
+	};
+
+	const handleRemoveLesson = (moduleIndex, lessonIndex) => {
+		const current = getValues(`syllabus.${moduleIndex}.lessons`);
+		if (lessonIndex) {
+			const updated = current.filter((_, i) => i !== lessonIndex);
+			setValue(`syllabus.${moduleIndex}.lessons`, updated);
+			setRerender((prev) => --prev);
+		}
+	};
 
 	// upload/add course data to backend
 	function uploadCourse(data) {
@@ -159,8 +187,56 @@ const AddCourseForm = () => {
 			<div className="col-span-2">
 				<InputField label="Course Description" name="description" placeholder="Overview of the course, who it’s for, benefits, etc." isTextArea rows={6} register={register} errors={errors} />
 			</div>
+
+			{/* Add Syllabus */}
 			<div className="col-span-2">
-				<InputField label="Curriculum / Syllabus" name="curriculum" placeholder="List of modules/lessons covered in this course" isTextArea rows={8} register={register} errors={errors} margin="top-10" />
+				<p className="text-lg text-white/85 font-semibold mb-4">Add Syllabus</p>
+
+				{ModuleFields.map((field, moduleIndex) => {
+					const currentLessons = getValues(`syllabus.${moduleIndex}.lessons`) || [];
+
+					return (
+						<div key={field.id} className="border border-gray-700 p-4 rounded mb-2">
+							<div className="flex items-center gap-2">
+								<div className="flex-1">
+									<InputField name={`syllabus.${moduleIndex}.module`} register={register} placeholder="Module Title" className="bg-gray-800" />
+								</div>
+								<RemoveField remove={removeModule} index={moduleIndex} className="py-4 mt-1" />
+							</div>
+
+							<div className="space-y-2 mt-3">
+								{currentLessons?.map((_, lessonIndex) => (
+									<div key={lessonIndex} className="flex gap-2 items-center pl-8">
+										<span className="w-4 h-1 rounded-full bg-zinc-700"></span>
+										<div className="flex-1">
+											<InputField name={`syllabus.${moduleIndex}.lessons.${lessonIndex}`} register={register} placeholder="Lesson Title" className="py-3" />
+										</div>
+										<button type="button" onClick={() => handleRemoveLesson(moduleIndex, lessonIndex)} className="bg-red-600 hover:bg-red-500 text-white py-3 px-4 rounded-md transition duration-200`" disabled={!lessonIndex}>
+											<Trash2 size="1.3rem" />
+										</button>
+									</div>
+								))}
+
+								<button type="button" onClick={() => handleAddLesson(moduleIndex)} className="bg-green-600 text-white px-3.5 py-2.5 rounded-lg flex items-center gap-1 ml-14 mt-3">
+									<Plus size="1.2rem" />
+									Add Lesson
+								</button>
+							</div>
+						</div>
+					);
+				})}
+
+				<button
+					type="button"
+					onClick={() =>
+						appendModule({
+							module: "",
+							lessons: [""],
+						})
+					}
+					className="bg-green-700 text-white px-4.5 py-3.5 rounded-lg flex items-center gap-2 font-medium mt-3">
+					<Plus size="1.2rem" /> Add Module
+				</button>
 			</div>
 
 			{/* Add Instructors (Dynamic) */}
@@ -185,26 +261,15 @@ const AddCourseForm = () => {
 								<InputField label="Role" name={`instructors.${index}.role`} register={register} placeholder="e.g., Lead, Assistant" className="py-3" errors={errors} />
 							</div>
 							{/* add, remove field buttons */}
-							<div className="flex gap-2">
-								<button type="button" onClick={() => appendInstructor(index)} className="bg-green-600 hover:bg-green-500 text-white py-3.5 px-4 rounded-md transition duration-200">
-									<Plus size="1.3rem" />
-								</button>
-								<button type="button" onClick={() => removeInstructor(index)} className="bg-red-600 hover:bg-red-500 text-white py-3.5 px-4 rounded-md transition duration-200">
-									<Trash2 size="1.3rem" />
-								</button>
-							</div>
+							<FieldArrayButtons append={appendInstructor} remove={removeInstructor} appendIndex={index} removeIndex={index} />
 						</div>
 					</div>
 				))}
 			</div>
 
-			<button type="button" onClick={() => appendInstructor({instructorId: "", role: ""})} className="bg-green-600 text-white px-4 py-2.5 rounded-md flex items-center gap-2 w-fit">
-				<Plus size="1.3rem" /> <span>Add Instructor</span>
-			</button>
-
 			{/* Add FAQs (Dynamic) */}
 			<div className="col-span-2">
-				<h3 className="text-lg font-semibold text-white/85 mb-4">Course FAQs</h3>
+				<p className="text-lg font-semibold text-white/85 mb-4">Course FAQs</p>
 
 				<div className="col-span-2">
 					{faqFields.map((item, index) => (
@@ -218,18 +283,12 @@ const AddCourseForm = () => {
 								<InputField label="Answer" name={`faqs.${index}.answer`} register={register} placeholder="e.g., You’ll get recorded sessions" className="py-3" />
 							</div>
 							{/* add, remove field buttons */}
-							<div className="flex gap-2">
-								<button type="button" onClick={() => appendFaq(index)} className="bg-green-600 hover:bg-green-500 text-white py-3.5 px-4 rounded-md transition duration-200">
-									<Plus size="1.3rem" />
-								</button>
-								<button type="button" onClick={() => removeFaq(index)} className="bg-red-600 hover:bg-red-500 text-white py-3 px-4 rounded-md transition duration-200">
-									<Trash2 size="1.3rem" />
-								</button>
-							</div>
+							<FieldArrayButtons append={appendFaq} remove={removeFaq} appendIndex={index} removeIndex={index} />
 						</div>
 					))}
 				</div>
 			</div>
+
 			{/* Submit button */}
 			<Button htmlType="submit" type="primary" size="large" icon={<CircleFadingPlus size="1.15rem" />} className="mt-8 w-full rounded-md hover:opacity-85" style={{width: "12rem", backgroundColor: "#e36a08", padding: "28px 30px"}}>
 				<span className="font-medium text-lg">Add Course</span>
