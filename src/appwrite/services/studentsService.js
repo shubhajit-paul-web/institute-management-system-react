@@ -5,7 +5,7 @@ export class StudentsService {
 	client = new Client();
 	databases;
 	bucket;
-
+	
 	constructor() {
 		this.client.setEndpoint(appwriteConfig.URL).setProject(appwriteConfig.PROJECT_ID);
 		this.databases = new Databases(this.client);

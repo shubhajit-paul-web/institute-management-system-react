@@ -4,9 +4,19 @@ import {Button} from "antd";
 import {CircleFadingPlus, Plus, Trash2} from "lucide-react";
 import {useState} from "react";
 import FieldArrayButtons, {RemoveField} from "../FormUtils/FieldArrayButtons";
+import coursesService from "../../appwrite/services/coursesService";
+import {useDispatch, useSelector} from "react-redux";
+import {addCourse} from "../../features/courses/coursesSlice";
+import {notifySuccess} from "../../utils/ToastNotification";
+import {closeModel} from "../../features/toggleModelView/toggleModelSlice";
 
 const AddCourseForm = () => {
+	const dispatch = useDispatch();
 	const [_, setRerender] = useState(0);
+	const [loading, setLoading] = useState(false);
+	const [appwriteError, setAppwriteError] = useState("");
+	const instituteID = useSelector((state) => state.authReducer.instituteDetails.$id);
+
 	const [allInstructors] = useState([
 		{
 			_id: "t1",
@@ -47,6 +57,7 @@ const AddCourseForm = () => {
 	const {
 		register,
 		control,
+		reset,
 		handleSubmit,
 		setValue,
 		getValues,
@@ -64,7 +75,7 @@ const AddCourseForm = () => {
 		},
 	});
 
-	// Set up field array for dynamically adding/removing (FAQs)
+	// Field array for (FAQs)
 	const {
 		fields: faqFields,
 		append: appendFaq,
@@ -74,7 +85,7 @@ const AddCourseForm = () => {
 		name: "faqs",
 	});
 
-	// Set up field array for dynamically adding/removing (instructors)
+	// Field array for (instructors)
 	const {
 		fields: instructorFields,
 		append: appendInstructor,
@@ -103,8 +114,33 @@ const AddCourseForm = () => {
 	};
 
 	// upload/add course data to backend
-	function uploadCourse(data) {
-		console.log(data);
+	async function uploadCourse(courseData) {
+		setAppwriteError("");
+		setLoading(true);
+
+		try {
+			const createdCourse = await coursesService.addCourse({
+				instituteID,
+				courseCreatedDate: Date.now(),
+				...courseData,
+				faqs: JSON.stringify(courseData.faqs),
+				instructors: JSON.stringify(courseData.instructors),
+				syllabus: JSON.stringify(courseData.syllabus),
+				thumbnail: courseData.thumbnail[0],
+			});
+
+			if (createdCourse) {
+				dispatch(addCourse(createdCourse));
+
+				notifySuccess("Course added successfully!");
+				dispatch(closeModel());
+				reset(); // clear all the input fields
+			}
+		} catch (error) {
+			setAppwriteError(error.message);
+		} finally {
+			setLoading(false);
+		}
 	}
 
 	// Categories options
@@ -172,9 +208,9 @@ const AddCourseForm = () => {
 
 			<InputField label="Promo Video URL" name="promoVideo" placeholder="e.g., https://youtu.be/sample" register={register} errors={errors} />
 
-			<InputField label="Website / External Link" name="website" placeholder="e.g., https://yourinstitute.com/course-name" register={register} errors={errors} />
+			<InputField label="Website / External Link" name="websiteLink" placeholder="e.g., https://yourinstitute.com/course-name" register={register} errors={errors} />
 
-			<InputField label="Seats Available (Leave empty for unlimited)" name="seats" type="number" placeholder="e.g., 30" register={register} errors={errors} />
+			<InputField label="Seats Available (Leave empty for unlimited)" name="seats" type="number" placeholder="e.g., 30" register={register} />
 
 			<InputField label="Certification Provided" name="certification" type="select" register={register} errors={errors} options={["Yes", "No"]} />
 
@@ -288,9 +324,10 @@ const AddCourseForm = () => {
 					))}
 				</div>
 			</div>
-
+			{/* Appwrite error message */}
+			{appwriteError && <p className="col-span-2 text-red-600 font-medium">{appwriteError}</p>}
 			{/* Submit button */}
-			<Button htmlType="submit" type="primary" size="large" icon={<CircleFadingPlus size="1.15rem" />} className="mt-8 w-full rounded-md hover:opacity-85" style={{width: "12rem", backgroundColor: "#e36a08", padding: "28px 30px"}}>
+			<Button loading={loading} htmlType="submit" type="primary" size="large" icon={<CircleFadingPlus size="1.15rem" />} className="mt-8 w-full rounded-md hover:opacity-85" style={{width: "12rem", backgroundColor: "#e36a08", padding: "28px 30px"}}>
 				<span className="font-medium text-lg">Add Course</span>
 			</Button>
 		</form>
