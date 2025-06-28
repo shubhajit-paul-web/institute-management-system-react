@@ -1,14 +1,15 @@
-import {createSlice, nanoid} from "@reduxjs/toolkit";
+import {createSlice} from "@reduxjs/toolkit";
 
 export const coursesSlice = createSlice({
 	name: "courses",
 	initialState: [],
 	reducers: {
-		addCourse: (state, action) => {
-			state.push({
-				id: nanoid(),
-				courseInfo: action.payload,
-			});
+		addCourse: (state, {payload}) => {
+			if (Array.isArray(payload)) {
+				state.push(...payload);
+			} else {
+				state.push(payload);
+			}
 		},
 		removeCourse: (state, action) => {
 			const courseID = action.payload;
