@@ -1,14 +1,20 @@
 import {createSlice} from "@reduxjs/toolkit";
 
+const initialState = {
+	courses: [],
+	filteredCourses: [],
+};
+
 export const coursesSlice = createSlice({
 	name: "courses",
-	initialState: [],
+	initialState,
 	reducers: {
 		addCourse: (state, {payload}) => {
 			if (Array.isArray(payload)) {
-				state.push(...payload);
+				state.courses = payload;
+				state.filteredCourses = payload;
 			} else {
-				state.push(payload);
+				state.courses.push(payload);
 			}
 		},
 		removeCourse: (state, action) => {

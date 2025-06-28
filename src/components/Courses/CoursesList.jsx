@@ -3,16 +3,14 @@ import CourseCard from "./CourseCard";
 import {addCourse} from "../../features/courses/coursesSlice";
 import coursesService from "../../appwrite/services/coursesService";
 import {useDispatch, useSelector} from "react-redux";
-import SkeletonBlock from "../Skeletons/SkeletonBlock";
-import CoursesCardSkeleton from "../Skeletons/Courses/CourseCardSkeleton";
 import CoursesListSkeleton from "../Skeletons/Courses/CoursesListSkeleton";
 
 const CoursesList = () => {
 	const dispatch = useDispatch();
 	const [loading, setLoading] = useState(true);
 	const instituteID = useSelector((state) => state.authReducer.instituteDetails.$id);
-	const coursesData = useSelector((state) => state.coursesReducer);
-
+	const coursesData = useSelector((state) => state.coursesReducer.courses);
+	
 	const fetchCourses = async () => {
 		setLoading(true);
 
