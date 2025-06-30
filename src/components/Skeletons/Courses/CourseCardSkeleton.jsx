@@ -14,11 +14,11 @@ const CoursesCardSkeleton = () => {
 				<SkeletonBlock width="w-18" height="h-6" bgColor="bg-white/10" />
 				<SkeletonBlock width="w-22" height="h-6" bgColor="bg-white/10" />
 			</div>
-			<SkeletonBlock height="h-4" bgColor="bg-white/10" className="my-6" />
+			<SkeletonBlock height="h-4" bgColor="bg-white/10" className="my-4" />
 			<div className="flex gap-3">
-				<SkeletonBlock width="w-22" height="h-9" bgColor="bg-white/10" />
-				<SkeletonBlock width="w-22" height="h-9" bgColor="bg-white/10" />
-				<SkeletonBlock width="w-26" height="h-9" bgColor="bg-white/10" />
+				<SkeletonBlock width="w-20" height="h-8" bgColor="bg-white/10" />
+				<SkeletonBlock width="w-20" height="h-8" bgColor="bg-white/10" />
+				<SkeletonBlock width="w-22" height="h-8" bgColor="bg-white/10" />
 			</div>
 		</SkeletonBlock>
 	);

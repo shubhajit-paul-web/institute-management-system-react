@@ -35,12 +35,10 @@ const CoursesList = () => {
 		return <CoursesListSkeleton />
 	}
 
-	console.log(coursesData);
-
 	return (
 		<div className={`grid ${coursesData.length >= 3 ? "grid-cols-[repeat(auto-fit,_minmax(20rem,_1fr))]" : "grid-cols-3"}  gap-6 place-items-center`}>
 			{coursesData.map((courseInfo) => {
-				return <CourseCard info={courseInfo} key={courseInfo?.$id} />;
+				return <CourseCard courseInfo={courseInfo} key={courseInfo?.$id} />;
 			})}
 		</div>
 	);
