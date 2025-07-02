@@ -121,7 +121,6 @@ const AddCourseForm = () => {
 		try {
 			const createdCourse = await coursesService.addCourse({
 				instituteID,
-				courseCreatedDate: Date.now(),
 				...courseData,
 				faqs: JSON.stringify(courseData.faqs),
 				instructors: JSON.stringify(courseData.instructors),
@@ -198,7 +197,7 @@ const AddCourseForm = () => {
 
 			<InputField label="Course Thumbnail" name="thumbnail" type="file" register={register} errors={errors} />
 
-			<InputField label="Price" name="price" type="number" placeholder="e.g., ₹4999" register={register} errors={errors} />
+			<InputField label="Original Price" name="price" type="number" placeholder="e.g., ₹4999" register={register} errors={errors} />
 
 			<InputField label="Discount Price" name="discountPrice" type="number" placeholder="e.g., ₹2999 (optional)" register={register} errors={errors} />
 

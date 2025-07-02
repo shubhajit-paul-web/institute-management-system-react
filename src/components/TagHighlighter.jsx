@@ -57,7 +57,7 @@ function TagHighlighter({tag}) {
 	else if (tagLength <= 12) colorKey = "cyan";
 
 	return (
-		<span className={`text-xs font-medium py-1 px-2.5 rounded-md`} style={{backgroundColor: tagColors[colorKey].bg, color: tagColors[colorKey].text}}>
+		<span className={`text-xs font-medium py-1 px-2.5 rounded-md cursor-default transition-all hover:opacity-85`} style={{backgroundColor: tagColors[colorKey].bg, color: tagColors[colorKey].text}}>
 			{tag}
 		</span>
 	);

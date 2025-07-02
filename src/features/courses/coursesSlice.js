@@ -19,11 +19,15 @@ export const coursesSlice = createSlice({
 		},
 		removeCourse: (state, action) => {
 			const courseID = action.payload;
-
 			return state.filter((course) => course.id !== courseID);
+		},
+		searchCourses: (state, action) => {
+			const query = action.payload?.toLowerCase()?.trim();
+
+			state.filteredCourses = state.courses.filter((course) => course?.title?.toLowerCase()?.includes(query));
 		},
 	},
 });
 
-export const {addCourse, removeCourse} = coursesSlice.actions;
+export const {addCourse, removeCourse, searchCourses} = coursesSlice.actions;
 export default coursesSlice.reducer;

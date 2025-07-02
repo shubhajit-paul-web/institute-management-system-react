@@ -23,13 +23,9 @@ export const studentsSlice = createSlice({
 		searchStudents: (state, action) => {
 			const query = action.payload?.toLowerCase()?.trim();
 
-			if (query) {
-				state.filteredStudents = state.students.filter((student) => {
-					return student?.studentName?.toLowerCase()?.includes(query) || student?.email?.toLowerCase()?.includes(query);
-				});
-			} else {
-				state.filteredStudents = [...state.students];
-			}
+			state.filteredStudents = state.students.filter((student) => {
+				return student?.studentName?.toLowerCase()?.includes(query) || student?.email?.toLowerCase()?.includes(query);
+			});
 		},
 	},
 });

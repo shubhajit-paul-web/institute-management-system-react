@@ -9,7 +9,7 @@ const CoursesList = () => {
 	const dispatch = useDispatch();
 	const [loading, setLoading] = useState(true);
 	const instituteID = useSelector((state) => state.authReducer.instituteDetails.$id);
-	const coursesData = useSelector((state) => state.coursesReducer.courses);
+	const coursesData = useSelector((state) => state.coursesReducer.filteredCourses);
 	
 	const fetchCourses = async () => {
 		setLoading(true);

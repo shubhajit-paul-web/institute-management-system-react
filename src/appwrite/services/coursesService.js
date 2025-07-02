@@ -25,11 +25,10 @@ export class CoursesService {
 	}
 
 	// Add new course
-	async addCourse({instituteID, courseCreatedDate, title, category, tags, startDate, duration, weeklyTime, level, mode, thumbnail, price, discountPrice, eligibility, language, promoVideo, websiteLink, seats, certification, placement, status, learnings, description, faqs, instructors, syllabus}) {
+	async addCourse({instituteID, title, category, tags, startDate, duration, weeklyTime, level, mode, thumbnail, price, discountPrice, eligibility, language, promoVideo, websiteLink, seats, certification, placement, status, learnings, description, faqs, instructors, syllabus}) {
 		try {
 			return await this.databases.createDocument(appwriteConfig.database.id, appwriteConfig.database.collections.courses, ID.unique(), {
                 instituteID,
-                courseCreatedDate,
 				title,
 				category,
 				tags,
