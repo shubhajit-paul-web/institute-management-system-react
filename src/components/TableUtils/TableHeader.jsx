@@ -4,7 +4,7 @@ const TableHeader = ({fields}) => {
 			<tr className="text-left text-[1.08rem]">
 				{fields.map((item, index) => {
 					return (
-						<th className="px-4 py-4 font-medium" key={index}>
+						<th className="text-nowrap px-4 py-4 font-medium" key={index}>
 							{item}
 						</th>
 					);

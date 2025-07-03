@@ -1,5 +1,5 @@
 import {useDispatch} from "react-redux";
-import {openClassesModel, openCourseModel, openStudentModel} from "../features/toggleModelView/toggleModelSlice";
+import {openClassModel, openCourseModel, openStudentModel} from "../features/toggleModelView/toggleModelSlice";
 import {useLocation} from "react-router-dom";
 
 const ButtonOne = ({icon, text}) => {
@@ -9,7 +9,7 @@ const ButtonOne = ({icon, text}) => {
 	function handleModel() {
 		if (routeName === "/students") dispatch(openStudentModel(true));
 		else if (routeName === "/courses") dispatch(openCourseModel(true));
-		else if (routeName === "/classes") dispatch(openClassesModel(true));
+		else if (routeName === "/classes") dispatch(openClassModel(true));
 	}
 
 	return (

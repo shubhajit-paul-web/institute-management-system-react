@@ -12,7 +12,7 @@ const ClassesHeader = () => {
 	}, [watch("classes")])
 	
 
-	return <PageHeader placeholder="Search classes..." btnIcon={<CircleFadingPlus size="1.32rem" />} btnText="Add Class" name="classes" register={register} />;
+	return <PageHeader placeholder="Search classes..." btnIcon={<CircleFadingPlus size="1.32rem" />} btnText="Add New Class" name="classes" register={register} />;
 };
 
 export default ClassesHeader;

@@ -26,5 +26,5 @@ export const toggleModelSlice = createSlice({
 	},
 });
 
-export const {openStudentModel, openCourseModel, openClassesModel, closeModel} = toggleModelSlice.actions;
+export const {openStudentModel, openCourseModel, openClassModel, closeModel} = toggleModelSlice.actions;
 export default toggleModelSlice.reducer;
