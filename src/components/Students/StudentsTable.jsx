@@ -9,6 +9,8 @@ import {Link} from "react-router-dom";
 import TableLayout from "../TableUtils/TableLayout";
 import TableCell from "../TableUtils/TableCell";
 import TableRow from "../TableUtils/TableRow";
+import {Eye} from "lucide-react";
+import {Tooltip} from "antd";
 
 const StudentTable = () => {
 	const [loading, setLoading] = useState(true);
@@ -59,8 +61,14 @@ const StudentTable = () => {
 							</TableCell>
 							<TableCell>{student?.mobile}</TableCell>
 							<TableCell>{formatDateForDisplay(student?.admissionDate)}</TableCell>
-							<TableCell className="opacity-60 dark:hover:text-sky-500 cursor-pointer">
-								<Link to={`/students/${student?.studentId}`}>View</Link>
+							<TableCell className="text-center">
+								<Tooltip title="View Student Details">
+									<Link to={`/students/${student?.studentId}`}>
+										<button className="bg-sky-400/15 p-2 text-sky-600 rounded-md">
+											<Eye size="1.1rem" />
+										</button>
+									</Link>
+								</Tooltip>
 							</TableCell>
 						</TableRow>
 					);

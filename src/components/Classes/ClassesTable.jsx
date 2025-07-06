@@ -1,7 +1,8 @@
-import { Edit, Trash2 } from "lucide-react";
+import {Edit, Eye, Trash2} from "lucide-react";
 import TableCell from "../TableUtils/TableCell";
 import TableLayout from "../TableUtils/TableLayout";
 import TableRow from "../TableUtils/TableRow";
+import {Tooltip} from "antd";
 
 const ClassesTable = () => {
 	const classesData = [
@@ -33,7 +34,7 @@ const ClassesTable = () => {
 		},
 		{
 			id: 3,
-			classTopic: "Class 8 Maths Class 8 MathsClass 8 Maths 8 Maths 8 Maths",
+			classTopic: "Class 8 Maths",
 			course: "Mathematics",
 			section: "A",
 			batch: "2024",
@@ -77,22 +78,35 @@ const ClassesTable = () => {
 			{classesData?.length === 0 ||
 				classesData?.map((classDetails, index) => {
 					return (
-						<TableRow>
+						<TableRow key={index}>
 							<TableCell>{index + 1}</TableCell>
 							<TableCell>
-                <span>{classDetails.classTopic}</span>
-              </TableCell>
+								<span>{classDetails.classTopic}</span>
+							</TableCell>
 							<TableCell>{classDetails.course}</TableCell>
 							<TableCell>{classDetails.batch}</TableCell>
 							<TableCell>{classDetails.teacher}</TableCell>
-							<TableCell>{classDetails.noOfStudents}</TableCell>
+							<TableCell className="text-center">{classDetails.noOfStudents}</TableCell>
 							<TableCell>{classDetails.classroom}</TableCell>
 							<TableCell>{classDetails.timing}</TableCell>
 							<TableCell className="text-center">{classDetails.status === "Active" ? "🟢" : "🔴"}</TableCell>
-              <TableCell className="flex items-center gap-2">
-                <button className="bg-green-600/60 p-2 rounded-md"><Edit size="1.2rem" /></button>
-                <button className="bg-red-600/60 p-2 rounded-md"><Trash2 size="1.2rem" /></button>
-              </TableCell>
+							<TableCell className="flex items-center gap-2">
+								<Tooltip title="View">
+									<button className="bg-sky-400/15 p-2 text-sky-600 rounded-md">
+										<Eye size="1.1rem" />
+									</button>
+								</Tooltip>
+								<Tooltip title="Edit">
+									<button className="bg-green-400/15 p-2 text-green-600 rounded-md">
+										<Edit size="1.1rem" />
+									</button>
+								</Tooltip>
+								<Tooltip title="Delete">
+									<button className="bg-red-600/20 p-2 text-red-600 rounded-md">
+										<Trash2 size="1.1rem" />
+									</button>
+								</Tooltip>
+							</TableCell>
 						</TableRow>
 					);
 				})}

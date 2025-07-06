@@ -10,7 +10,7 @@ const CoursesList = () => {
 	const [loading, setLoading] = useState(true);
 	const instituteID = useSelector((state) => state.authReducer.instituteDetails.$id);
 	const coursesData = useSelector((state) => state.coursesReducer.filteredCourses);
-	
+
 	const fetchCourses = async () => {
 		setLoading(true);
 
@@ -32,15 +32,18 @@ const CoursesList = () => {
 	}, [dispatch]);
 
 	if (loading) {
-		return <CoursesListSkeleton />
+		return <CoursesListSkeleton />;
 	}
 
 	return (
-		<div className={`grid ${coursesData.length >= 3 ? "grid-cols-[repeat(auto-fit,_minmax(20rem,_1fr))]" : "grid-cols-3"}  gap-6 place-items-center`}>
-			{coursesData.map((courseInfo) => {
+		<>
+			{coursesData.length && <p className="text-lg text-center font-medium py-[27.4vh]  dark:text-gray-600">No courses found...</p>}
+			<div className={`grid ${coursesData.length >= 3 ? "grid-cols-[repeat(auto-fit,_minmax(20rem,_1fr))]" : "grid-cols-3"}  gap-6 place-items-center`}>
+				{/* {coursesData.map((courseInfo) => {
 				return <CourseCard courseInfo={courseInfo} key={courseInfo?.$id} />;
-			})}
-		</div>
+				})} */}
+			</div>
+		</>
 	);
 };
 

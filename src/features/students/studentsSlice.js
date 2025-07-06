@@ -9,12 +9,13 @@ export const studentsSlice = createSlice({
 	name: "students",
 	initialState,
 	reducers: {
-		addStudent: (state, action) => {
-			if (Array.isArray(action.payload)) {
-				state.students = action.payload;
-				state.filteredStudents = action.payload;
+		addStudent: (state, {payload}) => {
+			if (Array.isArray(payload)) {
+				state.students = payload;
+				state.filteredStudents = payload;
 			} else {
-				state.students.push(action.payload);
+				state.students.push(payload);
+				state.filteredStudents.push(payload);
 			}
 		},
 		removeStudent: (state, action) => {
