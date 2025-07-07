@@ -1,10 +1,10 @@
 import {Button} from "antd";
-import { UserRoundPlus } from "lucide-react";
+import { CircleFadingPlus } from "lucide-react";
 
-const FormSubmitBtn = ({name, loading = false}) => {
+const FormSubmitBtn = ({name, loading = false, icon, marginTop = "mt-0"}) => {
 	return (
-		<Button loading={loading} htmlType="submit" type="primary" size="large" icon={<UserRoundPlus size="1.05rem" />} className="mt-8 w-full py-3 rounded-md font-bold hover:opacity-85" style={{width: "10rem", backgroundColor: "#e36a08", padding: "25px 30px"}}>
-			{name}
+		<Button loading={loading} htmlType="submit" type="primary" size="large" icon={icon || <CircleFadingPlus size="1.1rem" />} className={`${marginTop} w-full py-3 rounded-md font-bold hover:opacity-85`} style={{width: "fit-content", backgroundColor: "#e36a08", padding: "28px 22px"}}>
+			<span className="font-medium text-[1.06rem]">{name}</span>
 		</Button>
 	);
 };

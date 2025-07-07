@@ -1,7 +1,6 @@
 import {useForm, useFieldArray} from "react-hook-form";
 import InputField from "../InputField";
-import {Button} from "antd";
-import {CircleFadingPlus, Plus, Trash2} from "lucide-react";
+import {Plus, Trash2} from "lucide-react";
 import {useState} from "react";
 import FieldArrayButtons, {RemoveField} from "../FormUtils/FieldArrayButtons";
 import coursesService from "../../appwrite/services/coursesService";
@@ -9,6 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {addCourse} from "../../features/courses/coursesSlice";
 import {notifySuccess} from "../../utils/ToastNotification";
 import {closeModel} from "../../features/toggleModelView/toggleModelSlice";
+import FormSubmitBtn from "../FormSubmitBtn";
 
 const AddCourseForm = () => {
 	const dispatch = useDispatch();
@@ -326,9 +326,7 @@ const AddCourseForm = () => {
 			{/* Appwrite error message */}
 			{appwriteError && <p className="col-span-2 text-red-600 font-medium">{appwriteError}</p>}
 			{/* Submit button */}
-			<Button loading={loading} htmlType="submit" type="primary" size="large" icon={<CircleFadingPlus size="1.15rem" />} className="mt-8 w-full rounded-md hover:opacity-85" style={{width: "12rem", backgroundColor: "#e36a08", padding: "28px 30px"}}>
-				<span className="font-medium text-lg">Add Course</span>
-			</Button>
+			<FormSubmitBtn loading={loading} name="Add Course" marginTop="mt-8" />
 		</form>
 	);
 };

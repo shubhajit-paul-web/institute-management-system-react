@@ -17,7 +17,6 @@ const ClassesTable = () => {
 			classroom: "Room 302",
 			timing: "9:00 AM - 10:00 AM",
 			status: "Active",
-			actions: ["Edit", "Delete", "View"],
 		},
 		{
 			id: 2,
@@ -30,7 +29,6 @@ const ClassesTable = () => {
 			classroom: "Room 203",
 			timing: "11:30 AM - 12:30 PM",
 			status: "Active",
-			actions: ["Edit", "Delete", "View"],
 		},
 		{
 			id: 3,
@@ -43,7 +41,6 @@ const ClassesTable = () => {
 			classroom: "Room 101",
 			timing: "1:00 PM - 2:00 PM",
 			status: "Inactive",
-			actions: ["Edit", "Delete", "View"],
 		},
 		{
 			id: 4,
@@ -56,7 +53,6 @@ const ClassesTable = () => {
 			classroom: "Room 305",
 			timing: "10:15 AM - 11:15 AM",
 			status: "Active",
-			actions: ["Edit", "Delete", "View"],
 		},
 		{
 			id: 5,
@@ -69,7 +65,6 @@ const ClassesTable = () => {
 			classroom: "Room 204",
 			timing: "12:45 PM - 1:45 PM",
 			status: "Inactive",
-			actions: ["Edit", "Delete", "View"],
 		},
 	];
 

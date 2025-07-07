@@ -1,24 +1,53 @@
 import {useForm} from "react-hook-form";
 import InputField from "../InputField";
-import {Button} from "antd";
-import {UserRoundPlus} from "lucide-react";
 import FormSubmitBtn from "../FormSubmitBtn";
+import {useDispatch, useSelector} from "react-redux";
+import {useState} from "react";
+import classesService from "../../appwrite/services/classesService";
+import {addClass} from "../../features/classes/classesSlice";
+import {notifySuccess} from "../../utils/ToastNotification";
+import {closeModel} from "../../features/toggleModelView/toggleModelSlice";
 
 const AddClassForm = () => {
+	const dispatch = useDispatch();
+	const [loading, setLoading] = useState(false);
+	const [appwriteError, setAppwriteError] = useState("");
+	const instituteID = useSelector((state) => state.authReducer.instituteDetails.$id);
 	const {
 		register,
 		handleSubmit,
+		reset,
 		formState: {errors},
 	} = useForm();
 
-	function addClassData(classData) {
-		console.log(classData);
+	async function addClassData(classData) {
+		setAppwriteError("");
+		setLoading(true);
+
+		try {
+			const createdClass = await classesService.addClass({
+				instituteID,
+				...classData,
+			});
+
+			if (createdClass) {
+				dispatch(addClass(createdClass));
+
+				notifySuccess("Class added successfully!");
+				dispatch(closeModel());
+				reset(); // clear all the input fields
+			}
+		} catch (error) {
+			setAppwriteError(error.message);
+		} finally {
+			setLoading(false);
+		}
 	}
 
 	return (
 		<form onSubmit={handleSubmit(addClassData)} className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-10 text-white rounded">
 			{/* Row 1 */}
-			<InputField label="Class / Topic Title" name="className" placeholder="e.g. Introduction to ReactJS" register={register} errors={errors} />
+			<InputField label="Class / Topic Title" name="classTopic" placeholder="e.g. Introduction to ReactJS" register={register} errors={errors} />
 			<InputField type="select" options={["MERN Stack Development", "Frontend Development", "Backend Development", "DSA"]} label="Select Course" name="course" register={register} errors={errors} />
 
 			{/* Row 2 */}
@@ -26,7 +55,7 @@ const AddClassForm = () => {
 			<InputField type="select" options={["Harsh Sharma", "Sarthak Sharma", "Ankur Prajapati"]} label="Select Teacher" name="teacher" register={register} errors={errors} />
 
 			{/* Row 3 */}
-			<InputField label="Number of Students" name="noOfStudents" placeholder="e.g. 35" register={register} errors={errors} />
+			<InputField label="Number of Students (Optional)" name="noOfStudents" placeholder="e.g. 35" register={register} errors={errors} />
 			<InputField label="Classroom / Room No." name="classroom" placeholder="e.g. Room 301" register={register} errors={errors} />
 
 			{/* Row 4 */}
@@ -35,11 +64,12 @@ const AddClassForm = () => {
 
 			{/* Row 5 */}
 			<div className="col-span-2">
-				<InputField isTextArea={true} label="Notes / Description" name="description" placeholder="Optional description..." register={register} />
+				<InputField isTextArea={true} label="Notes / Description (Optional)" name="description" placeholder="Optional description..." register={register} />
 			</div>
-
+			{/* Appwrite error message */}
+			{appwriteError && <p className="col-span-2 text-red-600 font-medium">{appwriteError}</p>}
 			{/* Submit button */}
-			<FormSubmitBtn name="Add New Class" />
+			<FormSubmitBtn loading={loading} name="Add New Class" marginTop="1rem" />
 		</form>
 	);
 };

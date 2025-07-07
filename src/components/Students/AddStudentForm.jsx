@@ -2,13 +2,13 @@ import {useForm} from "react-hook-form";
 import {UserRoundPlus} from "lucide-react";
 import {useDispatch, useSelector} from "react-redux";
 import {closeModel} from "../../features/toggleModelView/toggleModelSlice";
-import {Button} from "antd";
 import InputField from "../InputField";
 import studentsService from "../../appwrite/services/studentsService";
 import {nanoid} from "@reduxjs/toolkit";
 import {useState} from "react";
 import {notifyError, notifySuccess} from "../../utils/ToastNotification";
 import {addStudent} from "../../features/students/studentsSlice";
+import FormSubmitBtn from "../FormSubmitBtn";
 
 const AddStudentForm = () => {
 	const dispatch = useDispatch();
@@ -98,9 +98,7 @@ const AddStudentForm = () => {
 			<p className="col-span-2 text-red-500/85">{appwriteError}</p>
 
 			{/* Submit button */}
-			<Button loading={loading} htmlType="submit" type="primary" size="large" icon={<UserRoundPlus size="1.05rem" />} className="mt-8 w-full py-3 rounded-md font-bold hover:opacity-85" style={{width: "10rem", backgroundColor: "#e36a08", padding: "25px 30px"}}>
-				Add Student
-			</Button>
+			<FormSubmitBtn loading={loading} name="Add Student" icon={<UserRoundPlus size="1.05rem" />} />
 		</form>
 	);
 };
