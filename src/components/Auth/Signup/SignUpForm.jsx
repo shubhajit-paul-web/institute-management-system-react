@@ -7,7 +7,7 @@ import {KeySquare} from "lucide-react";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {notifyError} from "../../../utils/ToastNotification.js";
-const InputField = lazy(() => import("./InputField"));
+const InputField = lazy(() => import("../../InputField.jsx"));
 
 const SignUpForm = () => {
 	const dispatch = useDispatch();

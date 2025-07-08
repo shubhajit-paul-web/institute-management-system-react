@@ -3,70 +3,43 @@ import TableCell from "../TableUtils/TableCell";
 import TableLayout from "../TableUtils/TableLayout";
 import TableRow from "../TableUtils/TableRow";
 import {Tooltip} from "antd";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import classesService from "../../appwrite/services/classesService";
+import { addClass } from "../../features/classes/classesSlice";
+import SkeletonBlock from "../Skeletons/SkeletonBlock";
 
 const ClassesTable = () => {
-	const classesData = [
-		{
-			id: 1,
-			classTopic: "Class 12 Science",
-			course: "Physics",
-			section: "A",
-			batch: "2025",
-			teacher: "Mr. Sinha",
-			noOfStudents: 40,
-			classroom: "Room 302",
-			timing: "9:00 AM - 10:00 AM",
-			status: "Active",
-		},
-		{
-			id: 2,
-			classTopic: "Class 9 English",
-			course: "English Literature",
-			section: "B",
-			batch: "2025",
-			teacher: "Ms. Fernandez",
-			noOfStudents: 30,
-			classroom: "Room 203",
-			timing: "11:30 AM - 12:30 PM",
-			status: "Active",
-		},
-		{
-			id: 3,
-			classTopic: "Class 8 Maths",
-			course: "Mathematics",
-			section: "A",
-			batch: "2024",
-			teacher: "Mr. Gupta",
-			noOfStudents: 28,
-			classroom: "Room 101",
-			timing: "1:00 PM - 2:00 PM",
-			status: "Inactive",
-		},
-		{
-			id: 4,
-			classTopic: "Class 11 Commerce",
-			course: "Economics",
-			section: "C",
-			batch: "2025",
-			teacher: "Mrs. Sharma",
-			noOfStudents: 35,
-			classroom: "Room 305",
-			timing: "10:15 AM - 11:15 AM",
-			status: "Active",
-		},
-		{
-			id: 5,
-			classTopic: "Class 10 Arts",
-			course: "History",
-			section: "B",
-			batch: "2024",
-			teacher: "Ms. Roy",
-			noOfStudents: 27,
-			classroom: "Room 204",
-			timing: "12:45 PM - 1:45 PM",
-			status: "Inactive",
-		},
-	];
+	const [loading, setLoading] = useState(true);
+	const dispatch = useDispatch();
+	const instituteID = useSelector((state) => state.authReducer.instituteDetails.$id);
+	const classesData = useSelector((state) => state.classesReducer.filteredClasses);
+
+	async function fetchClassesData() {
+		try {
+			const {documents: allClasses} = await classesService.getAllClasses(instituteID);
+
+			if (allClasses.length) {
+				dispatch(addClass(allClasses));
+			}
+		} catch (error) {
+			console.error("fetchClassesData Error:", error.message);
+		} finally {
+			setLoading(false);
+		}
+	}
+
+	useEffect(() => {
+		fetchClassesData();
+	}, [dispatch]);
+
+	if (loading) {
+		return (
+			<SkeletonBlock height="h-20" className="text-lg text-white/70 text-center content-center">
+				Loading...
+			</SkeletonBlock>
+		);
+	}
 
 	return (
 		<TableLayout tableName="classes" tableFields={["#", "Class Name", "Course", "Batch", "Teacher", "No. of Students", "Classroom", "Timing", "Status", "Actions"]}>

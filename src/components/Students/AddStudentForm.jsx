@@ -87,11 +87,11 @@ const AddStudentForm = () => {
 
 			{/* Row 9 */}
 			<InputField type="number" label="Pincode" register={register} name="pincode" errors={errors} placeholder="Pincode" />
-			<InputField label="Previous School" register={register} name="previousSchool" placeholder="(Optional) - Name of previous school" />
+			<InputField label="Previous School (Optional)" register={register} name="previousSchool" placeholder="Name of previous school" />
 
 			{/* Row 10 */}
 			<div className="col-span-2">
-				<InputField isTextArea="true" label="Extra info/note" register={register} name="extraNote" placeholder="(Optional) - Extra notes or info" />
+				<InputField isTextArea="true" label="Extra info/note (Optional)" register={register} name="extraNote" placeholder="Extra notes or info" />
 			</div>
 
 			{/* Appwrite Error message */}
