@@ -1,13 +1,14 @@
-import {Edit, Eye, Trash2} from "lucide-react";
 import TableCell from "../TableUtils/TableCell";
 import TableLayout from "../TableUtils/TableLayout";
 import TableRow from "../TableUtils/TableRow";
-import {Tooltip} from "antd";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import classesService from "../../appwrite/services/classesService";
-import { addClass } from "../../features/classes/classesSlice";
+import {addClass} from "../../features/classes/classesSlice";
 import SkeletonBlock from "../Skeletons/SkeletonBlock";
+import ViewBtn from "../TableUtils/Buttons/ViewBtn";
+import EditBtn from "../TableUtils/Buttons/EditBtn";
+import DeleteBtn from "../TableUtils/Buttons/DeleteBtn";
 
 const ClassesTable = () => {
 	const [loading, setLoading] = useState(true);
@@ -42,7 +43,7 @@ const ClassesTable = () => {
 	}
 
 	return (
-		<TableLayout tableName="classes" tableFields={["#", "Class Name", "Course", "Batch", "Teacher", "No. of Students", "Classroom", "Timing", "Status", "Actions"]}>
+		<TableLayout tableName="classes" tableFields={["#", "Class Name", "Course", "Batch", "Teacher", "No. of Students", "Classroom", "Timing", "Status", "Actions"]} dataLength={classesData.length}>
 			{classesData?.length === 0 ||
 				classesData?.map((classDetails, index) => {
 					return (
@@ -59,21 +60,9 @@ const ClassesTable = () => {
 							<TableCell>{classDetails.timing}</TableCell>
 							<TableCell className="text-center">{classDetails.status === "Active" ? "🟢" : "🔴"}</TableCell>
 							<TableCell className="flex items-center gap-2">
-								<Tooltip title="View">
-									<button className="bg-sky-400/15 p-2 text-sky-600 rounded-md">
-										<Eye size="1.1rem" />
-									</button>
-								</Tooltip>
-								<Tooltip title="Edit">
-									<button className="bg-green-400/15 p-2 text-green-600 rounded-md">
-										<Edit size="1.1rem" />
-									</button>
-								</Tooltip>
-								<Tooltip title="Delete">
-									<button className="bg-red-600/20 p-2 text-red-600 rounded-md">
-										<Trash2 size="1.1rem" />
-									</button>
-								</Tooltip>
+								<ViewBtn />
+								<EditBtn />
+								<DeleteBtn />
 							</TableCell>
 						</TableRow>
 					);

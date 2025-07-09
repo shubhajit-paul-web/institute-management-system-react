@@ -2,17 +2,21 @@ import {CircleFadingPlus} from "lucide-react";
 import PageHeader from "../PageHeader";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { searchClasses } from "../../features/classes/classesSlice";
+import useDebounceEffect from "../../hooks/useDebounceEffect";
 
 const ClassesHeader = () => {
+	const dispatch = useDispatch();
 	const {register, watch} = useForm();
+	const searchClassesDebounced = useDebounceEffect((query) => dispatch(searchClasses(query)), 200);
 
 	useEffect(() => {
-		console.log(watch("classes"));
-
+		searchClassesDebounced(watch("classes"));
 	}, [watch("classes")])
 	
 
-	return <PageHeader placeholder="Search classes..." btnIcon={<CircleFadingPlus size="1.32rem" />} btnText="Add New Class" name="classes" register={register} />;
+	return <PageHeader placeholder="Search classes by topic or course..." btnIcon={<CircleFadingPlus size="1.32rem" />} btnText="Add New Class" name="classes" register={register} />;
 };
 
 export default ClassesHeader;

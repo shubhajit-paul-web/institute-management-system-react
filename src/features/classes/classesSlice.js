@@ -20,8 +20,8 @@ const classesSlice = createSlice({
 		},
 		searchClasses: (state, {payload}) => {
 			const query = payload?.toLowerCase()?.trim();
-
-			state.filteredClasses = state.classes.filter((classDetails) => classDetails.classTopic.includes(query) || classDetails.course.includes(query));
+			
+			state.filteredClasses = state.classes.filter((classDetails) => classDetails.classTopic.toLowerCase().includes(query) || classDetails.course.toLowerCase().includes(query));
 		},
 	},
 });
