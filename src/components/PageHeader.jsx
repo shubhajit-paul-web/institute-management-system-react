@@ -1,8 +1,9 @@
 import SearchBox from "./SearchBox";
 import ButtonOne from "./ButtonOne";
 import SectionWrapper from "./SectionWrapper";
+import { CircleFadingPlus } from "lucide-react";
 
-const PageHeader = ({placeholder, btnIcon, btnText, children, name, register}) => {
+const PageHeader = ({placeholder, btnIcon = <CircleFadingPlus />, btnText, children, name, register}) => {
 	return (
 		<SectionWrapper>
 			<div className="flex justify-between items-center">

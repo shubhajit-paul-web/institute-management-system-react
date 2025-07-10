@@ -6,6 +6,7 @@ export const toggleModelSlice = createSlice({
 		studentModel: false,
 		courseModel: false,
 		classModel: false,
+		paymentModel: false,
 		closeModel: false,
 	},
 	reducers: {
@@ -18,13 +19,17 @@ export const toggleModelSlice = createSlice({
 		openClassModel: (state, action) => {
 			state.classModel = action;
 		},
+		openPaymentModel: (state, action) => {
+			state.paymentModel = action;
+		},
 		closeModel: (state) => {
 			state.studentModel = false;
 			state.courseModel = false;
 			state.classModel = false;
+			state.paymentModel = false;
 		},
 	},
 });
 
-export const {openStudentModel, openCourseModel, openClassModel, closeModel} = toggleModelSlice.actions;
+export const {openStudentModel, openCourseModel, openClassModel, closeModel, openPaymentModel} = toggleModelSlice.actions;
 export default toggleModelSlice.reducer;
