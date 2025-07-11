@@ -11,9 +11,9 @@ const App = () => {
 	const networkStatus = useNetworkStatus(); // Track user’s network status
 	useDynamicTitle(); // Set page title based on current route
 
-	if (loading) return <PageLoader />;
-
-	return (
+	return loading ? (
+		<PageLoader />
+	) : (
 		<>
 			{!networkStatus && <OfflineMsg />}
 			<AppRoutes />

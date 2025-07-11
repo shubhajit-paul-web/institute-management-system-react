@@ -1,41 +1,15 @@
-import {useEffect, useState} from "react";
 import CourseCard from "./CourseCard";
-import {addCourse} from "../../features/courses/coursesSlice";
-import coursesService from "../../appwrite/services/coursesService";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import CoursesListSkeleton from "../Skeletons/Courses/CoursesListSkeleton";
+import useFetchCourses from "../../hooks/useFetchCourses";
 
 const CoursesList = () => {
-	const dispatch = useDispatch();
-	const [loading, setLoading] = useState(true);
-	const instituteID = useSelector((state) => state.authReducer.instituteDetails.$id);
 	const coursesData = useSelector((state) => state.coursesReducer.filteredCourses);
+	const loading = useFetchCourses();
 
-	const fetchCourses = async () => {
-		setLoading(true);
-
-		try {
-			const {documents: courses} = await coursesService.getAllCourses(instituteID);
-
-			if (courses) {
-				dispatch(addCourse(courses));
-			}
-		} catch (error) {
-			console.error("fetchCourses Error:", error.message);
-		} finally {
-			setLoading(false);
-		}
-	};
-
-	useEffect(() => {
-		fetchCourses();
-	}, [dispatch]);
-
-	if (loading) {
-		return <CoursesListSkeleton />;
-	}
-
-	return (
+	return loading ? (
+		<CoursesListSkeleton />
+	) : (
 		<>
 			{!coursesData.length && <p className="text-lg text-center font-medium py-[27.4vh]  dark:text-gray-600">No courses found...</p>}
 			<div className={`grid ${coursesData.length >= 3 ? "grid-cols-[repeat(auto-fit,_minmax(20rem,_1fr))]" : "grid-cols-3"}  gap-6 place-items-center`}>
