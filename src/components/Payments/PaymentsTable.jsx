@@ -120,12 +120,11 @@ const PaymentsTable = () => {
 	}
 
 	return (
-		<TableLayout tableName="payments" tableFields={["Payment ID", "Student Name", "Student ID", "Course", "Payment Date", "Payment Mode", "Amount Paid", "Total Fees", "Due Amount", "Status", "Receipt No.", "Actions"]} dataLength={paymentsData.length}>
+		<TableLayout tableName="payments" tableFields={["Student Name", "Student ID", "Course", "Payment Date", "Payment Mode", "Amount Paid", "Total Fees", "Due Amount", "Status", "Receipt No.", "Actions"]} dataLength={paymentsData.length}>
 			{paymentsData.length === 0 ||
 				paymentsData.map((payment, index) => {
 					return (
 						<TableRow key={index}>
-							<TableCell>{payment.paymentId}</TableCell>
 							<TableCell>{payment.studentName}</TableCell>
 							<TableCell>{payment.studentId}</TableCell>
 							<TableCell>{payment.course}</TableCell>
