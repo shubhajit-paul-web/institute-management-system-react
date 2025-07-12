@@ -4,13 +4,15 @@ import authReducer from "../features/auth/authSlice";
 import studentsReducer from "../features/students/studentsSlice";
 import toggleViewReducer from "../features/toggleModelView/toggleModelSlice";
 import classesReducer from "../features/classes/classesSlice";
+import paymentsReducer from "../features/payments/paymentsSlice";
 
 export const store = configureStore({
 	reducer: {
 		authReducer,
+		toggleViewReducer,
 		studentsReducer,
 		coursesReducer,
 		classesReducer,
-		toggleViewReducer,
+		paymentsReducer,
 	},
 });

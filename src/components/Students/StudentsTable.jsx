@@ -34,15 +34,11 @@ const StudentTable = () => {
 		fetchStudents();
 	}, [dispatch]);
 
-	if (loading) {
-		return (
-			<SkeletonBlock height="h-20" className="text-lg text-white/70 text-center content-center">
-				Loading...
-			</SkeletonBlock>
-		);
-	}
-
-	return (
+	return loading ? (
+		<SkeletonBlock height="h-25" className="text-lg text-white/70 text-center content-center">
+			Loading...
+		</SkeletonBlock>
+	) : (
 		<TableLayout tableName="students" tableFields={["ID", "Student", "Course", "Batch", "Email", "Mobile", "Admission Date", "Action"]} dataLength={studentsData.length}>
 			{studentsData?.length === 0 ||
 				studentsData?.map((student) => {
