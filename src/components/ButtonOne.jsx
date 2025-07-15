@@ -1,8 +1,9 @@
 import {useDispatch} from "react-redux";
 import {openClassModel, openCourseModel, openPaymentModel, openStudentModel} from "../features/toggleModelView/toggleModelSlice";
 import {useLocation} from "react-router-dom";
+import { CircleFadingPlus } from "lucide-react";
 
-const ButtonOne = ({icon, text}) => {
+const ButtonOne = ({icon = <CircleFadingPlus size="1.32rem" />, text}) => {
 	const dispatch = useDispatch();
 	const routeName = useLocation()?.pathname;
 

@@ -10,6 +10,7 @@ import paymentsService from "../../appwrite/services/paymentsService";
 import {addPayment} from "../../features/payments/paymentsSlice";
 import SkeletonBlock from "../Skeletons/SkeletonBlock";
 import useGetCourseTitle from "../../hooks/useGetCourseTitle";
+import {notifyError} from "../../utils/ToastNotification";
 
 const PaymentsTable = () => {
 	const dispatch = useDispatch();
@@ -25,6 +26,7 @@ const PaymentsTable = () => {
 				dispatch(addPayment(payments));
 			}
 		} catch (error) {
+			notifyError("Something went wrong while loading payments.");
 			console.error(error.message);
 		} finally {
 			setLoading(false);
@@ -56,9 +58,9 @@ const PaymentsTable = () => {
 							<TableCell>{getCourseTitle(payment.course)}</TableCell>
 							<TableCell>{payment.paymentDate}</TableCell>
 							<TableCell>{payment.paymentMode}</TableCell>
-							<TableCell>{payment.amountPaid.toLocaleString()}</TableCell>
-							<TableCell>{payment.totalFees.toLocaleString()}</TableCell>
-							<TableCell>{payment.dueAmount.toLocaleString() || "N/A"}</TableCell>
+							<TableCell>{Number(payment.amountPaid).toLocaleString()}</TableCell>
+							<TableCell>{Number(payment.totalFees).toLocaleString()}</TableCell>
+							<TableCell>{payment.dueAmount ? Number(payment.dueAmount).toLocaleString() : "N/A"}</TableCell>
 							<TableCell className="text-center">{paymentStatusSymbol(payment.status)}</TableCell>
 							<TableCell>{payment.receiptNo}</TableCell>
 							<TableCell className="flex items-center gap-2">

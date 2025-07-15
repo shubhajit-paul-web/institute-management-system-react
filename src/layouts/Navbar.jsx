@@ -12,7 +12,7 @@ const Navbar = () => {
 	return (
 		<div className="min-w-fit sticky top-5 w-fit h-[calc(100vh-2.5rem)] overflow-hidden rounded-2xl">
 			{/* Navbar Scrollable Content */}
-			<nav className="w-full h-full flex flex-col gap-5 dark:bg-bg-dark dark:text-text-main-dark p-5 overflow-y-auto overflow-x-hidden shadow-lg" style={{scrollbarWidth: "none"}}>
+			<nav aria-label="Sidebar navigation" className="w-full h-full flex flex-col gap-5 dark:bg-bg-dark dark:text-text-main-dark p-5 overflow-y-auto overflow-x-hidden shadow-lg" style={{scrollbarWidth: "none"}}>
 				<NavLink to="/" className={handleActiveLink}>
 					<ChartLine /> Dashboard
 				</NavLink>

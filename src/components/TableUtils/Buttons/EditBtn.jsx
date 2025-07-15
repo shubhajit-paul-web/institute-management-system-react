@@ -1,7 +1,7 @@
 import {Tooltip} from "antd";
 import { Edit } from "lucide-react";
 
-const EditBtn = ({onClick, tooltipTitle = "View"}) => {
+const EditBtn = ({onClick, tooltipTitle = "Edit"}) => {
 	return (
 		<Tooltip title={tooltipTitle}>
 			<button onClick={onClick} className="bg-green-400/15 p-2 text-green-600 rounded-md">

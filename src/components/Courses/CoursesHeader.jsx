@@ -1,4 +1,3 @@
-import {CircleFadingPlus} from "lucide-react";
 import PageHeader from "../PageHeader";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
@@ -16,7 +15,7 @@ const CoursesHeader = () => {
 	}, [watch("courses")])
 	
 
-	return <PageHeader placeholder="Search courses by title..." btnIcon={<CircleFadingPlus size="1.32rem" />} btnText="Add Course" name="courses" register={register} />;
+	return <PageHeader placeholder="Search courses by title..." btnText="Add Course" name="courses" register={register} />;
 };
 
 export default CoursesHeader;
