@@ -21,7 +21,7 @@ const paymentsSlice = createSlice({
 		searchPayments: (state, {payload}) => {
 			const query = payload?.toLowerCase()?.trim();
 
-			state.filteredPayments = state.payments.filter((payment) => payment?.studentName?.toLowerCase()?.includes(query) || payment?.studentId?.toLowerCase()?.includes(query) || payment?.course?.toLowerCase()?.includes(query));
+			state.filteredPayments = state.payments.filter((payment) => payment?.studentName?.toLowerCase()?.includes(query) || payment?.studentId?.toLowerCase()?.includes(query));
 		},
 	},
 });
