@@ -1,6 +1,6 @@
 import {useForm} from "react-hook-form";
 import InputField from "../InputField";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import FormSubmitBtn from "../FormSubmitBtn";
 import {useDispatch, useSelector} from "react-redux";
 import paymentsService from "../../appwrite/services/paymentsService";
@@ -17,9 +17,20 @@ const AddPaymentForm = () => {
 	const {
 		register,
 		handleSubmit,
+		setValue,
+		watch,
 		reset,
 		formState: {errors},
 	} = useForm();
+
+	console.log(coursesData);
+	
+	useEffect(() => {
+		const selectedCourseId = watch("course");
+
+		setValue("totalFees", coursesData.find((course) => course.$id === selectedCourseId)?.price);
+		
+	}, [watch("course")]);
 
 	async function addPaymentData(paymentData) {
 		setAppwriteError("");
@@ -59,9 +70,9 @@ const AddPaymentForm = () => {
 
 			<InputField type="select" label="Payment Mode" name="paymentMode" options={["Cash", "UPI", "Card", "Net Banking", "Cheque"]} register={register} errors={errors} />
 
-			<InputField label="Amount Paid" name="amountPaid" placeholder="e.g. 15000" type="number" register={register} errors={errors} />
+			<InputField label="Total Fees (Auto-filled)" name="totalFees" placeholder="N/A" type="number" register={register} info="Fees are automatically filled based on the selected course." readOnly />
 
-			<InputField label="Total Fees" name="totalFees" placeholder="e.g. 60000" type="number" register={register} errors={errors} />
+			<InputField label="Amount Paid" name="amountPaid" placeholder="e.g. 15000" type="number" register={register} errors={errors} />
 
 			<InputField label="Due Amount (Optional)" name="dueAmount" placeholder="e.g. 45000" type="number" register={register} />
 
