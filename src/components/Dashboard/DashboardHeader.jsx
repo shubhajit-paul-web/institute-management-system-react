@@ -12,7 +12,7 @@ const DashboardHeader = () => {
 			<p className="text-lg dark:text-zinc-300 line-clamp-1">{About}</p>
 
 			{/* React Bits - Particles Animation */}
-			<Particles particleColors={["#ffffff", "#ffffff"]} particleCount={200} particleSpread={10} speed={0.15} particleBaseSize={80} moveParticlesOnHover={false} alphaParticles={true} disableRotation={false} className="opacity-55" />
+			<Particles particleColors={["#ffffff", "#ffffff"]} particleCount={200} particleSpread={10} speed={0.15} particleBaseSize={80} moveParticlesOnHover={false} alphaParticles={true} disableRotation={false} className="opacity-40" />
 		</div>
 	);
 };

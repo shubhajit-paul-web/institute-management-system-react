@@ -9,6 +9,7 @@ import TableLayout from "../TableUtils/TableLayout";
 import TableCell from "../TableUtils/TableCell";
 import TableRow from "../TableUtils/TableRow";
 import ViewBtn from "../TableUtils/Buttons/ViewBtn";
+import DownloadBtn from "../TableUtils/Buttons/DownloadBtn";
 
 const StudentTable = () => {
 	const navigate = useNavigate();
@@ -56,8 +57,11 @@ const StudentTable = () => {
 							</TableCell>
 							<TableCell>{student?.mobile}</TableCell>
 							<TableCell>{formatDateForDisplay(student?.admissionDate)}</TableCell>
-							<TableCell className="text-center">
+							<TableCell className="text-center flex gap-2">
+								{/* <ViewBtn onClick={() => navigate(`/students/${student?.studentId}`)} tooltipTitle="View Student Details" /> */}
+				
 								<ViewBtn onClick={() => navigate(`/students/${student?.studentId}`)} tooltipTitle="View Student Details" />
+								<DownloadBtn />
 							</TableCell>
 						</TableRow>
 					);
