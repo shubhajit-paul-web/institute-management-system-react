@@ -11,6 +11,7 @@ import {addPayment} from "../../features/payments/paymentsSlice";
 import SkeletonBlock from "../Skeletons/SkeletonBlock";
 import useGetCourseTitle from "../../hooks/useGetCourseTitle";
 import {notifyError} from "../../utils/ToastNotification";
+import { Tooltip } from "antd";
 
 const PaymentsTable = () => {
 	const dispatch = useDispatch();
@@ -61,7 +62,11 @@ const PaymentsTable = () => {
 							<TableCell>{Number(payment.amountPaid).toLocaleString()}</TableCell>
 							<TableCell>{Number(payment.totalFees).toLocaleString()}</TableCell>
 							<TableCell>{payment.dueAmount ? Number(payment.dueAmount).toLocaleString() : "N/A"}</TableCell>
-							<TableCell className="text-center">{paymentStatusSymbol(payment.status)}</TableCell>
+							<TableCell className="text-center cursor-default">
+								<Tooltip title={payment.status}>
+									{paymentStatusSymbol(payment.status)}
+								</Tooltip>
+							</TableCell>
 							<TableCell>{payment.receiptNo}</TableCell>
 							<TableCell className="flex items-center gap-2">
 								<ViewBtn tooltipTitle="View Receipt" />
