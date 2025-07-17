@@ -5,6 +5,7 @@ import studentsReducer from "../features/students/studentsSlice";
 import toggleViewReducer from "../features/toggleModelView/toggleModelSlice";
 import classesReducer from "../features/classes/classesSlice";
 import paymentsReducer from "../features/payments/paymentsSlice";
+import cardModelReducer from "../features/students/cardModelSlice"
 
 export const store = configureStore({
 	reducer: {
@@ -14,5 +15,6 @@ export const store = configureStore({
 		coursesReducer,
 		classesReducer,
 		paymentsReducer,
+		cardModelReducer,
 	},
 });

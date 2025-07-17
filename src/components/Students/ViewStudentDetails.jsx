@@ -1,8 +1,6 @@
-import StudentIdCard from "./StudentIdCard"
-
 const ViewStudentDetails = () => {
   return (
-	<StudentIdCard />
+    <h1>Student details</h1>
   )
 }
 

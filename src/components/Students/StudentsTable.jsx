@@ -10,6 +10,7 @@ import TableCell from "../TableUtils/TableCell";
 import TableRow from "../TableUtils/TableRow";
 import ViewBtn from "../TableUtils/Buttons/ViewBtn";
 import DownloadBtn from "../TableUtils/Buttons/DownloadBtn";
+import {openModel} from "../../features/students/cardModelSlice";
 
 const StudentTable = () => {
 	const navigate = useNavigate();
@@ -58,10 +59,16 @@ const StudentTable = () => {
 							<TableCell>{student?.mobile}</TableCell>
 							<TableCell>{formatDateForDisplay(student?.admissionDate)}</TableCell>
 							<TableCell className="text-center flex gap-2">
-								{/* <ViewBtn onClick={() => navigate(`/students/${student?.studentId}`)} tooltipTitle="View Student Details" /> */}
-				
 								<ViewBtn onClick={() => navigate(`/students/${student?.studentId}`)} tooltipTitle="View Student Details" />
-								<DownloadBtn />
+
+								<DownloadBtn tooltipTitle="Download ID Card" onClick={() => {
+									dispatch(openModel({
+										studentId: student?.studentId,
+										photo: studentsService.generateFileURL(student?.photo),
+										studentName: student?.studentName,
+										fullAddress: student?.fullAddress,
+									}));
+								}} />
 							</TableCell>
 						</TableRow>
 					);
