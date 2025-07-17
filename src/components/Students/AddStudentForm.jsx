@@ -4,11 +4,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {closeModel} from "../../features/toggleModelView/toggleModelSlice";
 import InputField from "../InputField";
 import studentsService from "../../appwrite/services/studentsService";
-import {nanoid} from "@reduxjs/toolkit";
 import {useState} from "react";
 import {notifyError, notifySuccess} from "../../utils/ToastNotification";
 import {addStudent} from "../../features/students/studentsSlice";
 import FormSubmitBtn from "../FormSubmitBtn";
+import generateStudentId from "../../utils/generateStudentId";
 
 const AddStudentForm = () => {
 	const dispatch = useDispatch();
@@ -30,7 +30,7 @@ const AddStudentForm = () => {
 		try {
 			const createdStudent = await studentsService.addStudent({
 				instituteID,
-				studentId: nanoid(10),
+				studentId: generateStudentId(),
 				admissionDate: Date.now(),
 				...studentData,
 				photo: studentData.photo[0],
@@ -82,7 +82,7 @@ const AddStudentForm = () => {
 			<InputField label="City" register={register} name="city" errors={errors} placeholder="city" />
 
 			{/* Row 8 */}
-			<InputField label="City" register={register} name="state" errors={errors} placeholder="State" />
+			<InputField label="State" register={register} name="state" errors={errors} placeholder="State" />
 			<InputField label="Country" register={register} name="country" errors={errors} placeholder="Country" />
 
 			{/* Row 9 */}

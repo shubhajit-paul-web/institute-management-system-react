@@ -3,6 +3,7 @@ import {Download} from "lucide-react";
 import {useRef} from "react";
 import Barcode from "react-barcode";
 import {useSelector} from "react-redux";
+import {BrandLogoDark, BrandLogoLight} from "../BrandLogo";
 
 const StudentIdCard = ({studentData, handleCloseModel}) => {
 	const cardRef = useRef(null);
@@ -23,7 +24,7 @@ const StudentIdCard = ({studentData, handleCloseModel}) => {
 
 	return (
 		<>
-			<div ref={cardRef} className="w-[40rem] bg-white rounded-lg shadow-lg py-5 px-7 text-gray-800 font-sans">
+			<div ref={cardRef} className="relative w-[40rem] bg-white rounded-lg shadow-lg py-5 px-7 text-gray-800 font-sans">
 				{/* Institute Info */}
 				<div className="flex justify-between items-start border-b border-gray-300 pb-4">
 					<div className="flex gap-5 items-center">
@@ -66,6 +67,9 @@ const StudentIdCard = ({studentData, handleCloseModel}) => {
 						</div>
 					</div>
 				</div>
+
+				{/* watermark */}
+				<BrandLogoDark width="w-[6rem]" className="absolute bottom-2.5 right-2.5 opacity-30" draggable={false} />
 			</div>
 
 			{/* buttons */}
