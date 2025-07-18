@@ -15,7 +15,7 @@ const ClassesHeader = () => {
 	}, [watch("classes")])
 	
 
-	return <PageHeader placeholder="Search classes by topic or course..." btnText="Add New Class" name="classes" register={register} />;
+	return <PageHeader placeholder="Search classes by topic or course..." btnText="Add Class" name="classes" register={register} />;
 };
 
 export default ClassesHeader;

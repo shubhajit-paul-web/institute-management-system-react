@@ -17,7 +17,7 @@ const StudentsHeader = () => {
 	}, [watch("students")]);
 
 	return (
-		<PageHeader placeholder="Search students by name or email..." btnIcon={<UserRoundPlus size="1.32rem" />} btnText="Admission" name="students" register={register}>
+		<PageHeader placeholder="Search students by name or email..." btnIcon={<UserRoundPlus size="1.32rem" />} btnText="Add Student" name="students" register={register}>
 			<select className="px-7 py-[0.9rem] rounded-lg dark:bg-bg-dark border dark:border-dark-one dark:text-text-main-dark">
 				<option value="" defaultValue>
 					Export

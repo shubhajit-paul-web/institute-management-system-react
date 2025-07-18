@@ -9,6 +9,7 @@ import SkeletonBlock from "../Skeletons/SkeletonBlock";
 import ViewBtn from "../TableUtils/Buttons/ViewBtn";
 import EditBtn from "../TableUtils/Buttons/EditBtn";
 import DeleteBtn from "../TableUtils/Buttons/DeleteBtn";
+import { Tooltip } from "antd";
 
 const ClassesTable = () => {
 	const [loading, setLoading] = useState(true);
@@ -54,7 +55,11 @@ const ClassesTable = () => {
 							<TableCell className="text-center">{classDetails.noOfStudents}</TableCell>
 							<TableCell>{classDetails.classroom}</TableCell>
 							<TableCell>{classDetails.timing}</TableCell>
-							<TableCell className="text-center">{classDetails.status === "Active" ? "🟢" : "🔴"}</TableCell>
+							<TableCell className="text-center cursor-default">
+								<Tooltip title={classDetails.status}>
+									{classDetails.status === "Active" ? "🟢" : "🔴"}
+								</Tooltip>
+							</TableCell>
 							<TableCell className="flex items-center gap-2">
 								<ViewBtn />
 								<EditBtn />

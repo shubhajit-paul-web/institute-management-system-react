@@ -3,7 +3,7 @@ import {openClassModel, openCourseModel, openPaymentModel, openStudentModel} fro
 import {useLocation} from "react-router-dom";
 import { CircleFadingPlus } from "lucide-react";
 
-const ButtonOne = ({icon = <CircleFadingPlus size="1.32rem" />, text}) => {
+const ButtonOne = ({icon = <CircleFadingPlus size="1.25rem" />, text}) => {
 	const dispatch = useDispatch();
 	const routeName = useLocation()?.pathname;
 

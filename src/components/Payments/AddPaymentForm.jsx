@@ -23,8 +23,6 @@ const AddPaymentForm = () => {
 		formState: {errors},
 	} = useForm();
 
-	console.log(coursesData);
-	
 	useEffect(() => {
 		const selectedCourseId = watch("course");
 

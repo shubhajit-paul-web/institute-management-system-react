@@ -14,7 +14,7 @@ const Courses = () => {
 			<SectionWrapper>
 				<CoursesList />
 			</SectionWrapper>
-			<Model modelName="Add Course" reducerName="courseModel" width="w-6/11" className="dark:bg-bg-surface-dark/80">
+			<Model modelName="Add New Course" reducerName="courseModel" width="w-6/11" className="dark:bg-bg-surface-dark/80">
 				<AddCourseForm />
 			</Model>
 		</PageWrapper>

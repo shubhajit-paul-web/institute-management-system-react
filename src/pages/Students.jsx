@@ -14,7 +14,7 @@ const Students = () => {
 			<SectionWrapper>
 				<StudentTable />
 			</SectionWrapper>
-			<Model modelName="New admission" reducerName="studentModel">
+			<Model modelName="Add New Student" reducerName="studentModel">
 				<AddStudentForm />
 			</Model>
 			<CardModel />
