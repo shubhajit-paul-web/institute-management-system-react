@@ -200,7 +200,7 @@ const Particles = ({particleCount = 200, particleSpread = 10, speed = 0.1, parti
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [particleCount, particleSpread, speed, moveParticlesOnHover, particleHoverFactor, alphaParticles, particleBaseSize, sizeRandomness, cameraDistance, disableRotation]);
 
-	return <div ref={containerRef} className={`absolute w-full h-full pointer-events-none ${className}`} />;
+	return <div ref={containerRef} className={`absolute w-full h-full inset-0 pointer-events-none ${className}`} />;
 };
 
 export default Particles;

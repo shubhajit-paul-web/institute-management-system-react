@@ -41,34 +41,40 @@ const StudentTable = () => {
 			Loading...
 		</SkeletonBlock>
 	) : (
-		<TableLayout tableName="students" tableFields={["ID", "Student", "Course", "Batch", "Email", "Mobile", "Admission Date", "Action"]} dataLength={studentsData.length}>
+		<TableLayout tableName="students" tableFields={["ID", "Student", "Course", "Batch", "Email", "Admission Date", "Action"]} dataLength={studentsData.length}>
 			{studentsData?.length === 0 ||
 				studentsData?.map((student) => {
 					return (
 						<TableRow key={student?.studentId}>
 							<TableCell>{student?.studentId}</TableCell>
-							<TableCell className="flex items-center gap-3">
-								<img src={studentsService.generateFileURL(student?.photo)} alt="avatar" className="w-9 aspect-square object-cover object-center rounded-full" />
-								<span className="line-clamp-1">{student?.studentName}</span>
+							<TableCell>
+								<div className="flex items-center gap-3">
+									<img src={studentsService.generateFileURL(student?.photo)} alt="avatar" className="w-9 aspect-square object-cover object-center rounded-full shrink-0" />
+									<span className="block">{student?.studentName}</span>
+								</div>
 							</TableCell>
 							<TableCell>{student?.course}</TableCell>
 							<TableCell>{student?.batch}</TableCell>
 							<TableCell>
 								<span className="line-clamp-1">{student?.email}</span>
 							</TableCell>
-							<TableCell>{student?.mobile}</TableCell>
 							<TableCell>{formatDateForDisplay(student?.admissionDate)}</TableCell>
 							<TableCell className="text-center flex gap-2">
 								<ViewBtn onClick={() => navigate(`/students/${student?.studentId}`)} tooltipTitle="View Student Details" />
 
-								<DownloadBtn tooltipTitle="Download ID Card" onClick={() => {
-									dispatch(openModel({
-										studentId: student?.studentId,
-										photo: studentsService.generateFileURL(student?.photo),
-										studentName: student?.studentName,
-										fullAddress: student?.fullAddress,
-									}));
-								}} />
+								<DownloadBtn
+									tooltipTitle="Download ID Card"
+									onClick={() => {
+										dispatch(
+											openModel({
+												studentId: student?.studentId,
+												photo: studentsService.generateFileURL(student?.photo),
+												studentName: student?.studentName,
+												fullAddress: student?.fullAddress,
+											})
+										);
+									}}
+								/>
 							</TableCell>
 						</TableRow>
 					);

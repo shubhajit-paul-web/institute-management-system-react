@@ -1,5 +1,10 @@
+import {useDispatch} from "react-redux";
+import {closeModel} from "../features/toggleModelView/toggleModelSlice";
+
 const ModelOverlay = ({isOpened, className}) => {
-	return <div className={`backdrop-blur-2xl bg-black/25 w-screen h-screen fixed ${isOpened ? "opacity-80" : "opacity-0 invisible pointer-events-none"} top-0 left-0 z-10 transition-all ease-in-out duration-300 ${className}`}></div>;
+	const dispatch = useDispatch();
+
+	return <div onClick={() => dispatch(closeModel())} className={`backdrop-blur-2xl bg-black/25 w-screen h-screen fixed ${isOpened ? "opacity-80" : "opacity-0 invisible pointer-events-none"} top-0 left-0 z-10 transition-all ease-in-out duration-300 ${className}`}></div>;
 };
 
 export default ModelOverlay;

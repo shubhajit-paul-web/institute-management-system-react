@@ -3,7 +3,7 @@ import {Download} from "lucide-react";
 import {useRef} from "react";
 import Barcode from "react-barcode";
 import {useSelector} from "react-redux";
-import {BrandLogoDark, BrandLogoLight} from "../BrandLogo";
+import {BrandLogoDark} from "../BrandLogo";
 
 const StudentIdCard = ({studentData, handleCloseModel}) => {
 	const cardRef = useRef(null);
