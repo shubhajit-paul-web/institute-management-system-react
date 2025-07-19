@@ -1,16 +1,15 @@
-import { lazy } from "react";
 import PageWrapper from "../components/PageWrapper";
 import SectionWrapper from "../components/SectionWrapper";
 import Model from "../components/Model";
 import AddCourseForm from "../components/Courses/AddCourseForm";
 import CoursesList from "../components/Courses/CoursesList";
-// const CourseCard =  lazy(() => import("../components/Courses/CourseCard"));
-const CoursesHeader =  lazy(() => import("../components/Courses/CoursesHeader"));
+import PageHeader from "../components/PageHeader";
+import {searchCourses} from "../features/courses/coursesSlice";
 
 const Courses = () => {
 	return (
 		<PageWrapper pageName="Courses">
-			<CoursesHeader />
+			<PageHeader placeholder="Search courses by title..." btnText="Add Course" name="courses" onSearch={searchCourses} />
 			<SectionWrapper>
 				<CoursesList />
 			</SectionWrapper>

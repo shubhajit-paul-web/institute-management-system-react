@@ -11,7 +11,8 @@ import {addPayment} from "../../features/payments/paymentsSlice";
 import SkeletonBlock from "../Skeletons/SkeletonBlock";
 import useGetCourseTitle from "../../hooks/useGetCourseTitle";
 import {notifyError} from "../../utils/ToastNotification";
-import { Tooltip } from "antd";
+import {Tooltip} from "antd";
+import StatusBadge from "./StatusBadge";
 
 const PaymentsTable = () => {
 	const dispatch = useDispatch();
@@ -38,10 +39,14 @@ const PaymentsTable = () => {
 		fetchPayments();
 	}, [dispatch]);
 
-	function paymentStatusSymbol(status) {
-		if (status === "Paid") return "🟢";
-		else if (status === "Partially Paid") return "🟠";
-		else return "🔴";
+	function paymentStatusBadge(status) {
+		if (status === "Paid") {
+			return <StatusBadge status={status} className="dark:bg-green-400/10 dark:text-green-300 dark:ring-green-500/30" />;
+		} else if (status === "Partially Paid") {
+			return <StatusBadge status={status} className="dark:bg-yellow-400/10 dark:text-yellow-300 dark:ring-yellow-500/30" />;
+		} else {
+			return <StatusBadge status={status} className="dark:bg-red-400/10 dark:text-red-300 dark:ring-red-500/30" />;
+		}
 	}
 
 	return loading ? (
@@ -49,27 +54,21 @@ const PaymentsTable = () => {
 			Loading...
 		</SkeletonBlock>
 	) : (
-		<TableLayout tableName="payments" tableFields={["Student Name", "Student ID", "Course", "Payment Date", "Payment Mode", "Amount Paid", "Total Fees", "Due Amount", "Status", "Receipt No.", "Actions"]} dataLength={paymentsData.length}>
+		<TableLayout tableName="payments" tableFields={["Student ID", "Student Name", "Course", "Date", "Paid", "Fees", "Due", "Status", "Actions"]} dataLength={paymentsData.length}>
 			{paymentsData.length === 0 ||
 				paymentsData.map((payment, index) => {
 					return (
 						<TableRow key={index}>
-							<TableCell>{payment.studentName}</TableCell>
 							<TableCell>{payment.studentId}</TableCell>
+							<TableCell>{payment.studentName}</TableCell>
 							<TableCell>{getCourseTitle(payment.course)}</TableCell>
 							<TableCell>{payment.paymentDate}</TableCell>
-							<TableCell>{payment.paymentMode}</TableCell>
-							<TableCell>{Number(payment.amountPaid).toLocaleString()}</TableCell>
-							<TableCell>{Number(payment.totalFees).toLocaleString()}</TableCell>
-							<TableCell>{payment.dueAmount ? Number(payment.dueAmount).toLocaleString() : "N/A"}</TableCell>
-							<TableCell className="text-center cursor-default">
-								<Tooltip title={payment.status}>
-									{paymentStatusSymbol(payment.status)}
-								</Tooltip>
-							</TableCell>
-							<TableCell>{payment.receiptNo}</TableCell>
+							<TableCell>{"₹" + Number(payment.amountPaid).toLocaleString()}</TableCell>
+							<TableCell>{"₹" + Number(payment.totalFees).toLocaleString()}</TableCell>
+							<TableCell>{payment.dueAmount ? "₹" + Number(payment.dueAmount).toLocaleString() : "N/A"}</TableCell>
+							<TableCell className="cursor-default">{paymentStatusBadge(payment.status)}</TableCell>
 							<TableCell className="flex items-center gap-2">
-								<ViewBtn tooltipTitle="View Receipt" />
+								<ViewBtn tooltipTitle="View More Details" />
 								<EditBtn />
 								<DeleteBtn />
 							</TableCell>
