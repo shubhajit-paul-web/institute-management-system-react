@@ -2,7 +2,7 @@ import {Tooltip} from "antd";
 import {Info} from "lucide-react";
 import {useId} from "react";
 
-const InputField = ({label, type = "text", placeholder, register, name, defaultValue, readOnly, info, errors = false, isTextArea, rows, options, optionsValues = [], className}) => {
+const InputField = ({label, type = "text", placeholder, register, validate = {}, name, defaultValue, readOnly, info, errors = false, isTextArea, rows, options, optionsValues = [], className}) => {
 	const lableID = useId();
 
 	return (
@@ -42,7 +42,7 @@ const InputField = ({label, type = "text", placeholder, register, name, defaultV
 				</select>
 			) : (
 				<input
-					{...register(name, {required: errors && `${label} is required`})}
+					{...register(name, {required: errors && `${label} is required`, validate})}
 					id={lableID}
 					type={type}
 					placeholder={placeholder}

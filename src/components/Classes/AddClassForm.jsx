@@ -12,6 +12,7 @@ const AddClassForm = () => {
 	const dispatch = useDispatch();
 	const [loading, setLoading] = useState(false);
 	const [appwriteError, setAppwriteError] = useState("");
+	const coursesData = useSelector((state) => state.coursesReducer.courses);
 	const instituteID = useSelector((state) => state.authReducer.instituteDetails.$id);
 	const {
 		register,
@@ -48,7 +49,7 @@ const AddClassForm = () => {
 		<form onSubmit={handleSubmit(addClassData)} className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-10 text-white rounded">
 			{/* Row 1 */}
 			<InputField label="Class / Topic Title" name="classTopic" placeholder="e.g. Introduction to ReactJS" register={register} errors={errors} />
-			<InputField type="select" options={["MERN Stack Development", "Frontend Development", "Backend Development", "DSA"]} label="Select Course" name="course" register={register} errors={errors} />
+			<InputField type="select" options={coursesData.map((course) => course?.title)} optionsValues={coursesData.map((course) => course?.$id)} label="Select Course" name="course" register={register} errors={errors} />
 
 			{/* Row 2 */}
 			<InputField label="Batch Name or Academic Year" name="batch" placeholder="e.g. 2025-2026 or BATCH-12" register={register} errors={errors} />

@@ -9,8 +9,10 @@ import TableLayout from "../TableUtils/TableLayout";
 import TableCell from "../TableUtils/TableCell";
 import TableRow from "../TableUtils/TableRow";
 import ViewBtn from "../TableUtils/Buttons/ViewBtn";
+import EditBtn from "../TableUtils/Buttons/EditBtn";
 import DownloadBtn from "../TableUtils/Buttons/DownloadBtn";
 import {openModel} from "../../features/students/cardModelSlice";
+import useGetCourseTitle from "../../hooks/useGetCourseTitle";
 
 const StudentTable = () => {
 	const navigate = useNavigate();
@@ -18,6 +20,7 @@ const StudentTable = () => {
 	const [loading, setLoading] = useState(true);
 	const instituteID = useSelector((state) => state.authReducer.instituteDetails?.$id);
 	const studentsData = useSelector((state) => state.studentsReducer.filteredStudents);
+	const getCourseTitle = useGetCourseTitle();
 
 	const fetchStudents = async () => {
 		try {
@@ -41,7 +44,7 @@ const StudentTable = () => {
 			Loading...
 		</SkeletonBlock>
 	) : (
-		<TableLayout tableName="students" tableFields={["ID", "Student", "Course", "Batch", "Email", "Admission Date", "Action"]} dataLength={studentsData.length}>
+		<TableLayout tableName="students" tableFields={["ID", "Student", "Course", "Batch", "Email", "Admission Date", "Actions"]} dataLength={studentsData.length}>
 			{studentsData?.length === 0 ||
 				studentsData?.map((student) => {
 					return (
@@ -53,7 +56,7 @@ const StudentTable = () => {
 									<span className="block">{student?.studentName}</span>
 								</div>
 							</TableCell>
-							<TableCell>{student?.course}</TableCell>
+							<TableCell>{getCourseTitle(student?.course)}</TableCell>
 							<TableCell>{student?.batch}</TableCell>
 							<TableCell>
 								<span className="line-clamp-1">{student?.email}</span>
@@ -61,6 +64,7 @@ const StudentTable = () => {
 							<TableCell>{formatDateForDisplay(student?.admissionDate)}</TableCell>
 							<TableCell className="text-center flex gap-2">
 								<ViewBtn onClick={() => navigate(`/students/${student?.studentId}`)} tooltipTitle="View Student Details" />
+								<EditBtn />
 
 								<DownloadBtn
 									tooltipTitle="Download ID Card"

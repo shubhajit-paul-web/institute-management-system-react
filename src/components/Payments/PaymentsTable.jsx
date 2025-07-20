@@ -11,8 +11,7 @@ import {addPayment} from "../../features/payments/paymentsSlice";
 import SkeletonBlock from "../Skeletons/SkeletonBlock";
 import useGetCourseTitle from "../../hooks/useGetCourseTitle";
 import {notifyError} from "../../utils/ToastNotification";
-import {Tooltip} from "antd";
-import StatusBadge from "./StatusBadge";
+import StatusBadge from "../StatusBadge";
 
 const PaymentsTable = () => {
 	const dispatch = useDispatch();
@@ -41,11 +40,11 @@ const PaymentsTable = () => {
 
 	function paymentStatusBadge(status) {
 		if (status === "Paid") {
-			return <StatusBadge status={status} className="dark:bg-green-400/10 dark:text-green-300 dark:ring-green-500/30" />;
+			return <StatusBadge status={status} color="green" />;
 		} else if (status === "Partially Paid") {
-			return <StatusBadge status={status} className="dark:bg-yellow-400/10 dark:text-yellow-300 dark:ring-yellow-500/30" />;
-		} else {
-			return <StatusBadge status={status} className="dark:bg-red-400/10 dark:text-red-300 dark:ring-red-500/30" />;
+			return <StatusBadge status={status} color="yellow" />;
+		} else if (status === "Pending") {
+			return <StatusBadge status={status} color="red" />;
 		}
 	}
 

@@ -10,10 +10,13 @@ import {addStudent} from "../../features/students/studentsSlice";
 import FormSubmitBtn from "../FormSubmitBtn";
 import generateStudentId from "../../utils/generateStudentId";
 
+const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB in bytes
+
 const AddStudentForm = () => {
 	const dispatch = useDispatch();
 	const [loading, setLoading] = useState(false);
 	const [appwriteError, setAppwriteError] = useState("");
+	const coursesData = useSelector((state) => state.coursesReducer.courses);
 	const instituteID = useSelector((state) => state.authReducer.instituteDetails?.$id);
 
 	const {
@@ -39,7 +42,7 @@ const AddStudentForm = () => {
 			if (createdStudent) {
 				dispatch(addStudent(createdStudent));
 
-				notifySuccess(`Admission successful for ${studentData?.studentName}`);
+				notifySuccess("Student enrolled successfully.");
 				dispatch(closeModel());
 				reset(); // clear all the input fields
 			}
@@ -54,7 +57,16 @@ const AddStudentForm = () => {
 	return (
 		<form onSubmit={handleSubmit(uploadStudent)} className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-10 text-white rounded">
 			{/* Row 1 */}
-			<InputField label="Student's Photo" type="file" register={register} name="photo" errors={errors} />
+			<InputField
+				label="Student's Photo (Max size: 2MB)"
+				type="file"
+				register={register}
+				name="photo"
+				errors={errors}
+				validate={{
+					fileSize: (files) => files[0]?.size <= MAX_FILE_SIZE || "File size should be under 2MB",
+				}}
+			/>
 			<InputField label="Student's Name" register={register} name="studentName" errors={errors} placeholder="Enter student's name" />
 
 			{/* Row 2 */}
@@ -71,7 +83,7 @@ const AddStudentForm = () => {
 
 			{/* Row 5 */}
 			<InputField type="email" label="Email" register={register} name="email" errors={errors} placeholder="Enter email id" />
-			<InputField type="select" label="Course" register={register} name="course" errors={errors} options={["Web Development", "Frontend Development", "Backend Development", "DSA", "System Design"]} />
+			<InputField type="select" label="Course" register={register} name="course" errors={errors} options={coursesData.map((course) => course?.title)} optionsValues={coursesData.map((course) => course?.$id)} />
 
 			{/* Row 6 */}
 			<InputField type="select" label="Batch" register={register} name="batch" errors={errors} options={["Batch A", "Batch B", "Batch C"]} />

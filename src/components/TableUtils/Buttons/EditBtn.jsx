@@ -1,14 +1,8 @@
-import {Tooltip} from "antd";
-import { Edit } from "lucide-react";
+import {Edit} from "lucide-react";
+import IconButton from "./IconButton";
 
 const EditBtn = ({onClick, tooltipTitle = "Edit"}) => {
-	return (
-		<Tooltip title={tooltipTitle}>
-			<button onClick={onClick} className="bg-green-400/15 p-2 text-green-600 rounded-md">
-				<Edit size="1.1rem" />
-			</button>
-		</Tooltip>
-	);
+	return <IconButton onClick={onClick} tooltipTitle={tooltipTitle} icon={<Edit size="1.1rem" />} className="bg-green-400/15 text-green-600" />;
 };
 
 export default EditBtn;
