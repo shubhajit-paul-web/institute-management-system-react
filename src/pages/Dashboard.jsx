@@ -1,7 +1,8 @@
-import {lazy, useEffect, useRef} from "react";
+import {lazy, useEffect, useMemo, useRef} from "react";
 import PageWrapper from "../components/PageWrapper";
 import DashboardHeader from "../components/Dashboard/DashboardHeader";
 import {admissionsChart, paymentsChart} from "../utils/dashboardUtils";
+import {useSelector} from "react-redux";
 const OverviewCards = lazy(() => import("../components/Dashboard/OverviewCards"));
 const AdmissionsOverviewChart = lazy(() => import("../components/Dashboard/AdmissionsOverviewChart"));
 const PaymentsOverviewChart = lazy(() => import("../components/Dashboard/PaymentsOverviewChart"));
@@ -9,12 +10,24 @@ const PaymentsOverviewChart = lazy(() => import("../components/Dashboard/Payment
 const Dashboard = () => {
 	const admissionsChartContainer = useRef(null);
 	const paymentsChartContainer = useRef(null);
+	const paymentsData = useSelector((state) => state.paymentsReducer.payments);
 
-	// TODO: Response Metadata (response.total): The total field in the response metadata contains the total count of documents for that collection.
+	// Compute the total amount paid and due across all payments
+	const paymentSummary = useMemo(() => {
+		return paymentsData.reduce(
+			(totals, payment) => {
+				totals.amountPaid += Number(payment?.amountPaid) || 0;
+				totals.amountDue += Number(payment?.dueAmount) || 0;
+
+				return totals;
+			},
+			{amountPaid: 0, amountDue: 0}
+		);
+	}, [paymentsData]);
 
 	useEffect(() => {
 		const chart1 = admissionsChart(admissionsChartContainer);
-		const chart2 = paymentsChart(paymentsChartContainer);
+		const chart2 = paymentsChart(paymentsChartContainer, [paymentSummary.amountPaid, paymentSummary.amountDue]);
 
 		return () => {
 			chart1?.destroy();

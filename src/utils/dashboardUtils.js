@@ -78,7 +78,7 @@ export function admissionsChart(elem) {
 }
 
 // Payments Chart - Dashboard
-export function paymentsChart(elem) {
+export function paymentsChart(elem, paymentsData = []) {
 	if (!elem.current) return;
 
 	if (elem.current._apexChart) {
@@ -86,7 +86,7 @@ export function paymentsChart(elem) {
 	}
 
 	var options = {
-		series: [65, 20],
+		series: paymentsData,
 		labels: ["Paid", "Due"],
 		colors: ["#3FB950", "#F85149"], // success green & error red
 		chart: {

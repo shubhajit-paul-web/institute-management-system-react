@@ -52,7 +52,7 @@ const StudentTable = () => {
 							<TableCell>{student?.studentId}</TableCell>
 							<TableCell>
 								<div className="flex items-center gap-3">
-									<img src={studentsService.generateFileURL(student?.photo)} alt="avatar" className="w-9 aspect-square object-cover object-center rounded-full shrink-0" />
+									<img src={studentsService.generateFileURL(student?.photo)} alt="avatar" className="w-9 aspect-square object-cover object-center rounded-full shrink-0" loading="lazy" />
 									<span className="block">{student?.studentName}</span>
 								</div>
 							</TableCell>
