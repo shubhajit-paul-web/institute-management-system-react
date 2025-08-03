@@ -1,11 +1,11 @@
 import CourseCard from "./CourseCard";
 import {useSelector} from "react-redux";
 import CoursesListSkeleton from "../Skeletons/Courses/CoursesListSkeleton";
-import useFetchCourses from "../../hooks/useFetchCourses";
+import useFetchCourses from "../../hooks/data/useFetchCourses";
 
 const CoursesList = () => {
 	const coursesData = useSelector((state) => state.coursesReducer.filteredCourses);
-	const loading = useFetchCourses();
+	const {loading} = useFetchCourses();
 
 	return loading ? (
 		<CoursesListSkeleton />
